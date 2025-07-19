@@ -1,0 +1,33 @@
+{
+  "dungeons_and_combat:dungeons_and_combat": {
+    "criteria": {
+      "dungeons_and_combat_0": "2025-07-19 17:40:56 -0400"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/crafting_table": {
+    "criteria": {
+      "unlock_right_away": "2025-07-19 17:40:57 -0400"
+    },
+    "done": true
+  },
+  "minecraft:adventure/adventuring_time": {
+    "criteria": {
+      "minecraft:old_growth_birch_forest": "2025-07-19 17:41:01 -0400"
+    },
+    "done": false
+  },
+  "dungeons_and_combat:origin": {
+    "criteria": {
+      "origin_0": "2025-07-19 17:41:05 -0400"
+    },
+    "done": true
+  },
+  "dungeons_and_combat:the_rogue": {
+    "criteria": {
+      "the_rogue_0": "2025-07-19 17:41:05 -0400"
+    },
+    "done": true
+  },
+  "DataVersion": 3465
+}
