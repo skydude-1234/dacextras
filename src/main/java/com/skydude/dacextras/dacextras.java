@@ -40,7 +40,7 @@ public class dacextras {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.COMMON_CONFIG);
 
-        Mixins.addConfigurations("mixins.dacxirons.json");
+        Mixins.addConfigurations("dacextras.mixins.json");
 //        // Register the commonSetup method for modloading
 //        modEventBus.addListener(this::commonSetup);
 

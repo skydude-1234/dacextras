@@ -1,40 +1,51 @@
 package com.skydude.dacextras.mixin;
 
+import com.mojang.logging.LogUtils;
+import com.skydude.dacextras.AttributeModifiers;
+import com.skydude.dacextras.Config;
 import net.mcreator.dungeonsandcombat.init.DungeonsAndCombatModItems;
 import net.mcreator.dungeonsandcombat.procedures.RogueChoosedProcedure;
 
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
-import net.minecraftforge.event.TickEvent.Phase;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import javax.annotation.Nullable;
-import net.minecraftforge.eventbus.api.Event;
+
+import java.util.Objects;
+import java.util.UUID;
 
 @Mixin(value = RogueChoosedProcedure.class, remap = false)
+
 public abstract class OverrideRogue {
 
-    @Inject(method = "execute", at = @At("HEAD"), cancellable = true)
-    private static void overrideExecute(Entity entity, CallbackInfo ci) {
-        ci.cancel(); // cancel original method
+
+
+
+    //  @Inject(method = "execute", at = @At("HEAD"), cancellable = true)
+      @Inject(method = "execute(Lnet/minecraft/world/entity/Entity;)V", at = @At("HEAD"), cancellable = true)
+
+  private static void overrideExecute(Entity entity, CallbackInfo ci) {
+          System.out.println("Mixin OverrideRogue.execute() triggered with entity: " + entity);
+
+          if(entity == null){
+            LogUtils.getLogger().info("entityIS NULLLnull");
+        }
         if (entity != null) {
+            LogUtils.getLogger().info("entity!= null");
             if (entity instanceof Player) {
                 Player _player = (Player)entity;
                 _player.closeContainer();
@@ -54,19 +65,32 @@ public abstract class OverrideRogue {
             if (entity instanceof ServerPlayer) {
                 ServerPlayer _player = (ServerPlayer)entity;
                 Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("dungeons_and_combat:the_rogue"));
+                assert _adv != null;
+
                 AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
+                LogUtils.getLogger().info("RANDOM ADV VER THING SHULD WORK LOLZ NULLLnull");
                 if (!_ap.isDone()) {
                     for(String criteria : _ap.getRemainingCriteria()) {
                         _player.getAdvancements().award(_adv, criteria);
                     }
                 }
             }
+            LivingEntity living = (LivingEntity) entity;
 
-            ((LivingEntity)entity).getAttribute(Attributes.LUCK).setBaseValue((double)1.0F);
-            ((LivingEntity)entity).getAttribute(Attributes.MAX_HEALTH).setBaseValue((double)2.0F);
-            ((LivingEntity)entity).getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue((double)2.0F);
-            ((LivingEntity)entity).getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0.12);
-            ((LivingEntity)entity).getAttribute(Attributes.ATTACK_SPEED).setBaseValue(4.2);
+
+
+
+
+
+
+            Objects.requireNonNull(living.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(Config.ROGUE_MAX_HEALTH.get());
+            // set the health to amx health so no glitches happen
+            living.setHealth(living.getMaxHealth());
+            LogUtils.getLogger().info("HEALTH HAS HEALTHTED???? NULLLnull");
+            Objects.requireNonNull(living.getAttribute(Attributes.LUCK)).setBaseValue(1.0F);
+            Objects.requireNonNull(living.getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue((double)2.0F);
+            Objects.requireNonNull(living.getAttribute(Attributes.MOVEMENT_SPEED)).setBaseValue(0.12);
+            Objects.requireNonNull(living.getAttribute(Attributes.ATTACK_SPEED)).setBaseValue(4.2);
             if (entity instanceof Player) {
                 Player _player = (Player)entity;
                 _player.getInventory().armor.set(3, new ItemStack((ItemLike) DungeonsAndCombatModItems.ROGUE_HELMET.get()));
@@ -78,11 +102,15 @@ public abstract class OverrideRogue {
 
             if (entity instanceof Player) {
                 Player _player = (Player)entity;
-                _player.getInventory().armor.set(2, new ItemStack((ItemLike)DungeonsAndCombatModItems.ROGUE_CHESTPLATE.get()));
-                _player.getInventory().setChanged();
+                if(_player.getItemBySlot(EquipmentSlot.CHEST) == ItemStack.EMPTY) {
+                    _player.getInventory().armor.set(2, new ItemStack((ItemLike) DungeonsAndCombatModItems.EXILED_CHESTPLATE.get()));
+                    _player.getInventory().setChanged();
+                    LogUtils.getLogger().info("exiled is exiled");
+                }
             } else if (entity instanceof LivingEntity) {
                 LivingEntity _living = (LivingEntity)entity;
                 _living.setItemSlot(EquipmentSlot.CHEST, new ItemStack((ItemLike)DungeonsAndCombatModItems.ROGUE_CHESTPLATE.get()));
+                LogUtils.getLogger().info("exiled is rogue");
             }
 
             if (entity instanceof Player) {
@@ -126,6 +154,7 @@ public abstract class OverrideRogue {
             }
 
         }
+          ci.cancel(); // cancel original method
     }
 
 

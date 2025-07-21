@@ -1,0 +1,36 @@
+{
+  "dungeons_and_combat:origin": {
+    "criteria": {
+      "origin_0": "2025-07-19 19:38:02 -0400"
+    },
+    "done": true
+  },
+  "dungeons_and_combat:dungeons_and_combat": {
+    "criteria": {
+      "dungeons_and_combat_0": "2025-07-19 19:37:54 -0400"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/crafting_table": {
+    "criteria": {
+      "unlock_right_away": "2025-07-19 19:37:54 -0400"
+    },
+    "done": true
+  },
+  "dungeons_and_combat:the_rogue": {
+    "criteria": {
+      "the_rogue_0": "2025-07-19 19:38:02 -0400"
+    },
+    "done": true
+  },
+  "minecraft:adventure/adventuring_time": {
+    "criteria": {
+      "minecraft:frozen_river": "2025-07-19 19:38:24 -0400",
+      "minecraft:snowy_plains": "2025-07-19 19:37:56 -0400",
+      "minecraft:frozen_ocean": "2025-07-19 19:38:25 -0400",
+      "minecraft:snowy_beach": "2025-07-19 19:38:17 -0400"
+    },
+    "done": false
+  },
+  "DataVersion": 3465
+}
