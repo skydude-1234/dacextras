@@ -2,6 +2,10 @@ package com.skydude.dacextras;
 
 
 
+import net.mcreator.dungeonsandcombat.init.DungeonsAndCombatModItems;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.common.Mod;
 
@@ -15,11 +19,28 @@ public class Config {
     public static ForgeConfigSpec.DoubleValue ROGUE_SPEED;
     public static ForgeConfigSpec.DoubleValue ROGUE_ATTACK_SPEED;
 
-            ;
+    public static ForgeConfigSpec.ConfigValue<String> ROGUE_HELMET;
+    public static ForgeConfigSpec.ConfigValue<String> ROGUE_CHESTPLATE;
+    public static ForgeConfigSpec.ConfigValue<String> ROGUE_LEGGINGS;
+    public static ForgeConfigSpec.ConfigValue<String> ROGUE_BOOTS;
+
+    public static ForgeConfigSpec.DoubleValue BOUNTY_MAX_HEALTH;
+    public static ForgeConfigSpec.DoubleValue BOUNTY_LUCK;
+    public static ForgeConfigSpec.DoubleValue BOUNTY_DAMAGE;
+    public static ForgeConfigSpec.DoubleValue BOUNTY_SPEED;
+    public static ForgeConfigSpec.DoubleValue BOUNTY_ATTACK_SPEED;
+
+    public static ForgeConfigSpec.ConfigValue<String> BOUNTY_HELMET;
+    public static ForgeConfigSpec.ConfigValue<String> BOUNTY_CHESTPLATE;
+    public static ForgeConfigSpec.ConfigValue<String> BOUNTY_LEGGINGS;
+    public static ForgeConfigSpec.ConfigValue<String> BOUNTY_BOOTS;
+
+
+    ;
 
     static {
         ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
-        builder.comment("Common Config (: ").comment("Cool stuff here.").push("Common Config (:");
+        builder.comment("Common Config (: ").comment("Cool stuff here.");
 
         builder.push(" ROGUE CONFIG");
 
@@ -30,7 +51,7 @@ public class Config {
 
         ROGUE_MAX_HEALTH = builder
                 .comment("Max Health for Rogue")
-                .defineInRange("rogue_max_health", 16.0F, 1.0F, 100.0F);
+                .defineInRange("rogue_max_health", 106.0F, 1.0F, 1000.0F);
 
         ROGUE_LUCK = builder
                 .comment("Luck for Rogue")
@@ -42,13 +63,60 @@ public class Config {
 
         ROGUE_SPEED = builder
                 .comment("Speed for Rogue")
-                .defineInRange("rogue_speed", 0.12F, 0.0F, 100.0F);
+                .defineInRange("rogue_speed", 0.12, 0.0F, 100.0F);
 
         ROGUE_ATTACK_SPEED = builder
-                .comment("Speed for Rogue")
-                .defineInRange("rogue_speed", 4.2, 0.0F, 100.0F);
+                .comment("Attack Speed for Rogue")
+                .defineInRange("rogue_attack_speed", 4.2, 0, 100);
 
+        ROGUE_HELMET = builder
+                .comment("Starting Helmet for Rogue")
+                .define("rogue_helmet", "dungeons_and_combat:rogue_helmet");
+        ROGUE_CHESTPLATE= builder
+                .comment("Starting Chestplate for Rogue")
+                .define("rogue_chestplate", "dungeons_and_combat:rogue_chestplate");
 
+        ROGUE_LEGGINGS= builder
+                .comment("Starting Leggings for Rogue")
+                .define("rogue_leggings", "dungeons_and_combat:rogue_leggings");
+        ROGUE_BOOTS= builder
+                .comment("Starting Boots for Rogue")
+                .define("rogue_boots","dungeons_and_combat:rogue_boots");
+        builder.pop();
+        builder.push(" Bounty Hunter CONFIG");
+       BOUNTY_MAX_HEALTH = builder
+                .comment("Max Health for bounty hunter")
+                .defineInRange("bounty_max_health", 18.0F, 1.0F, 1000.0F);
+
+        BOUNTY_LUCK = builder
+                .comment("Luck for Rogue")
+                .defineInRange("bounty_luck", 1.0F, 0.0F, 100.0F);
+
+        BOUNTY_DAMAGE = builder
+                .comment("Attack Damage for bounty hunter")
+                .defineInRange("bounty_damage", 1.6F, 0.0F, 100.0F);
+
+        BOUNTY_SPEED = builder
+                .comment("Speed for bounty hunter")
+                .defineInRange("bounty_speed", 0.12, 0.0F, 100.0F);
+
+        BOUNTY_ATTACK_SPEED = builder
+                .comment("Attack Speed for bounty hunter")
+                .defineInRange("bounty_attack_speed", 3.95, 0, 100);
+
+        BOUNTY_HELMET = builder
+                .comment("Starting Helmet for bounty hunter")
+                .define("bounty_helmet", "minecraft:iron_helmet");
+        BOUNTY_CHESTPLATE= builder
+                .comment("Starting Chestplate for bounty hunter")
+                .define("bounty_chestplate", "minecraft:iron_chestplate");
+        //Item.byId(Item.getId(DungeonsAndCombatModItems.ROGUE_CHESTPLATE.get())));
+        BOUNTY_LEGGINGS= builder
+                .comment("Starting Leggings for bounty hunter")
+                .define("bounty_leggings", "minecraft:iron_leggings");
+        BOUNTY_BOOTS= builder
+                .comment("Starting Boots for bounty hunter")
+                .define("bounty_boots","minecraft:iron_boots");
 
         COMMON_CONFIG = builder.build();
     }

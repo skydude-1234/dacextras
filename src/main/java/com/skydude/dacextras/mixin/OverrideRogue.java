@@ -19,6 +19,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -86,11 +87,12 @@ public abstract class OverrideRogue {
             Objects.requireNonNull(living.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(Config.ROGUE_MAX_HEALTH.get());
             // set the health to amx health so no glitches happen
             living.setHealth(living.getMaxHealth());
-            LogUtils.getLogger().info("HEALTH HAS HEALTHTED???? NULLLnull");
-            Objects.requireNonNull(living.getAttribute(Attributes.LUCK)).setBaseValue(1.0F);
-            Objects.requireNonNull(living.getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue((double)2.0F);
-            Objects.requireNonNull(living.getAttribute(Attributes.MOVEMENT_SPEED)).setBaseValue(0.12);
-            Objects.requireNonNull(living.getAttribute(Attributes.ATTACK_SPEED)).setBaseValue(4.2);
+
+            Objects.requireNonNull(living.getAttribute(Attributes.LUCK)).setBaseValue(Config.ROGUE_LUCK.get());
+            Objects.requireNonNull(living.getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue(Config.ROGUE_DAMAGE.get());
+            Objects.requireNonNull(living.getAttribute(Attributes.MOVEMENT_SPEED)).setBaseValue(Config.ROGUE_SPEED.get());
+            Objects.requireNonNull(living.getAttribute(Attributes.ATTACK_SPEED)).setBaseValue(Config.ROGUE_ATTACK_SPEED.get());
+
             if (entity instanceof Player) {
                 Player _player = (Player)entity;
                 _player.getInventory().armor.set(3, new ItemStack((ItemLike) DungeonsAndCombatModItems.ROGUE_HELMET.get()));
@@ -102,15 +104,15 @@ public abstract class OverrideRogue {
 
             if (entity instanceof Player) {
                 Player _player = (Player)entity;
-                if(_player.getItemBySlot(EquipmentSlot.CHEST) == ItemStack.EMPTY) {
-                    _player.getInventory().armor.set(2, new ItemStack((ItemLike) DungeonsAndCombatModItems.EXILED_CHESTPLATE.get()));
+                if(_player.getItemBySlot(EquipmentSlot.CHEST).isEmpty()) {
+                    _player.getInventory().armor.set(2, new ItemStack(ForgeRegistries.ITEMS.getValue( new ResourceLocation(Config.ROGUE_CHESTPLATE.get()))));
                     _player.getInventory().setChanged();
                     LogUtils.getLogger().info("exiled is exiled");
                 }
             } else if (entity instanceof LivingEntity) {
                 LivingEntity _living = (LivingEntity)entity;
                 _living.setItemSlot(EquipmentSlot.CHEST, new ItemStack((ItemLike)DungeonsAndCombatModItems.ROGUE_CHESTPLATE.get()));
-                LogUtils.getLogger().info("exiled is rogue");
+
             }
 
             if (entity instanceof Player) {

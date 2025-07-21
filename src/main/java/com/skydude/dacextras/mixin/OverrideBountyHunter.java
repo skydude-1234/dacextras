@@ -1,6 +1,7 @@
 package com.skydude.dacextras.mixin;
 
 import com.skydude.dacextras.AttributeModifiers;
+import com.skydude.dacextras.Config;
 import net.mcreator.dungeonsandcombat.init.DungeonsAndCombatModItems;
 import net.mcreator.dungeonsandcombat.procedures.BountyHunterChoosedProcedure;
 import net.minecraft.advancements.Advancement;
@@ -64,14 +65,14 @@ public class OverrideBountyHunter {
             LivingEntity living = (LivingEntity) entity;
 
 
-            Objects.requireNonNull(living.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(18);
+            Objects.requireNonNull(living.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(Config.BOUNTY_MAX_HEALTH.get());
 // SET HEALTH TO MAX TO AVOID BUGS
             living.setHealth(living.getMaxHealth());
 
-            Objects.requireNonNull(living.getAttribute(Attributes.LUCK)).setBaseValue((double)1.0F);
-           living.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(1.6);
-         living.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0.12);
-           living.getAttribute(Attributes.ATTACK_SPEED).setBaseValue(3.95);
+            Objects.requireNonNull(living.getAttribute(Attributes.LUCK)).setBaseValue(Config.BOUNTY_LUCK.get());
+           Objects.requireNonNull(living.getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue(Config.BOUNTY_DAMAGE.get());
+         Objects.requireNonNull(living.getAttribute(Attributes.MOVEMENT_SPEED)).setBaseValue(Config.BOUNTY_SPEED.get());
+           Objects.requireNonNull(living.getAttribute(Attributes.ATTACK_SPEED)).setBaseValue(Config.BOUNTY_ATTACK_SPEED.get());
             if (entity instanceof Player) {
                 Player _player = (Player)entity;
                 _player.getInventory().armor.set(3, new ItemStack((ItemLike) DungeonsAndCombatModItems.BOUNTY_HUNTER_HELMET.get()));

@@ -1,7 +1,55 @@
 
 #Common Config (: 
 #Cool stuff here.
-["Common Config (:"]
-	#True Invisibility for Rogue
+[" ROGUE CONFIG"]
+	#Override Rogue Class with custom values & bug fixes HIGHLY RECOMMENDED
 	enableTrueInvis = true
+	#Max Health for Rogue
+	#Range: 1.0 ~ 1000.0
+	rogue_max_health = 106.0
+	#Luck for Rogue
+	#Range: 0.0 ~ 100.0
+	rogue_luck = 1.0
+	#Attack Damage for Rogue
+	#Range: 0.0 ~ 100.0
+	rogue_damage = 2.0
+	#Speed for Rogue
+	#Range: 0.0 ~ 100.0
+	rogue_speed = 0.12
+	#Attack Speed for Rogue
+	#Range: 0.0 ~ 100.0
+	rogue_attack_speed = 4.2
+	#Starting Helmet for Rogue
+	rogue_helmet = "minecraft:iron_helmet"
+	#Starting Chestplate for Rogue
+	rogue_chestplate = "minecraft:iron_chestplate"
+	#Starting Leggings for Rogue
+	rogue_leggings = "minecraft:iron_leggings"
+	#Starting Boots for Rogue
+	rogue_boots = "minecraft:iron_boots"
+
+[" Bounty Hunter CONFIG"]
+	#Max Health for bounty hunter
+	#Range: 1.0 ~ 1000.0
+	bounty_max_health = 106.0
+	#Luck for Rogue
+	#Range: 0.0 ~ 100.0
+	bounty_luck = 1.0
+	#Attack Damage for bounty hunter
+	#Range: 0.0 ~ 100.0
+	bounty_damage = 2.0
+	#Speed for bounty hunter
+	#Range: 0.0 ~ 100.0
+	bounty_speed = 0.12
+	#Attack Speed for bounty hunter
+	#Range: 0.0 ~ 100.0
+	bounty_attack_speed = 4.2
+	#Starting Helmet for bounty hunter
+	bounty_helmet = "minecraft:iron_helmet"
+	#Starting Chestplate for bounty hunter
+	bounty_chestplate = "minecraft:iron_chestplate"
+	#Starting Leggings for bounty hunter
+	bounty_leggings = "minecraft:iron_leggings"
+	#Starting Boots for bounty hunter
+	bounty_boots = "minecraft:iron_boots"
 
