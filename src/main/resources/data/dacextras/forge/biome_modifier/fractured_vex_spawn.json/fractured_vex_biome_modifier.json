@@ -1,0 +1,8 @@
+{
+  "type": "dacextras:add_fractured_vex_spawn",
+  "biomes": "minecraft:soul_sand_valley",
+  "entity": "dungeons_and_combat:fractured_vex",
+  "weight": 1,
+  "minCount": 0,
+  "maxCount": 1
+}

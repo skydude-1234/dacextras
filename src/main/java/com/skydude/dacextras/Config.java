@@ -18,7 +18,6 @@ public class Config {
     public static ForgeConfigSpec.DoubleValue ROGUE_DAMAGE;
     public static ForgeConfigSpec.DoubleValue ROGUE_SPEED;
     public static ForgeConfigSpec.DoubleValue ROGUE_ATTACK_SPEED;
-
     public static ForgeConfigSpec.ConfigValue<String> ROGUE_HELMET;
     public static ForgeConfigSpec.ConfigValue<String> ROGUE_CHESTPLATE;
     public static ForgeConfigSpec.ConfigValue<String> ROGUE_LEGGINGS;
@@ -29,11 +28,22 @@ public class Config {
     public static ForgeConfigSpec.DoubleValue BOUNTY_DAMAGE;
     public static ForgeConfigSpec.DoubleValue BOUNTY_SPEED;
     public static ForgeConfigSpec.DoubleValue BOUNTY_ATTACK_SPEED;
-
     public static ForgeConfigSpec.ConfigValue<String> BOUNTY_HELMET;
     public static ForgeConfigSpec.ConfigValue<String> BOUNTY_CHESTPLATE;
     public static ForgeConfigSpec.ConfigValue<String> BOUNTY_LEGGINGS;
     public static ForgeConfigSpec.ConfigValue<String> BOUNTY_BOOTS;
+
+    public static ForgeConfigSpec.DoubleValue KAMATH_MOVEMENT_SPEED;
+    public static ForgeConfigSpec.DoubleValue KAMATH_MAX_HEALTH;
+    public static ForgeConfigSpec.DoubleValue KAMATH_ARMOR;
+    public static ForgeConfigSpec.DoubleValue KAMATH_ATTACK_DAMAGE;
+    public static ForgeConfigSpec.DoubleValue KAMATH_FOLLOW_RANGE;
+    public static ForgeConfigSpec.DoubleValue KAMATH_KNOCKBACK_RESISTANCE;
+    public static ForgeConfigSpec.DoubleValue KAMATH_ATtACK_KNOCKBACK;
+
+    public static ForgeConfigSpec.IntValue FRACTURED_VEX_SPAWN_WEIGHT;
+    public static ForgeConfigSpec.IntValue  FRACTURED_VEX_MIN_COUNT;
+    public static ForgeConfigSpec.IntValue  FRACTURED_VEX_MAX_COUNT;
 
 
     ;
@@ -117,6 +127,41 @@ public class Config {
         BOUNTY_BOOTS= builder
                 .comment("Starting Boots for bounty hunter")
                 .define("bounty_boots","minecraft:iron_boots");
+
+        builder.pop();
+        builder.push(" KAMATH BOSS CONFIG");
+        KAMATH_MOVEMENT_SPEED = builder
+                .comment("Kamath's movement speed")
+                .defineInRange("kamath_movement_speed", 0.30, 0, 100);
+        KAMATH_MAX_HEALTH = builder
+                .comment("Kamath's Health")
+                .defineInRange("kamath_max_health", 500.0, 0, 100000);
+        KAMATH_ARMOR = builder
+                .comment("Kamath's armor")
+                .defineInRange("kamath_armor", 20.0, 0, 1000);
+        KAMATH_ATTACK_DAMAGE = builder
+                .comment("Kamath's damage ")
+                .defineInRange("kamath_attack_damage", 24.0, 0, 1000);
+        KAMATH_FOLLOW_RANGE = builder
+                .comment("Kamath's Follow Range")
+                .defineInRange("kamath_follow_range", 64.0, 0, 1000);
+        KAMATH_KNOCKBACK_RESISTANCE = builder
+                .comment("Kamath's knockback resistance")
+                .defineInRange("kamath_knockback_resistance", 1.0, 0, 1000);
+        KAMATH_ATtACK_KNOCKBACK = builder
+                .comment("Kamath's attack knockback")
+                .defineInRange("kamath_attack_knockback", 1.0, 0, 1000);
+        builder.pop();
+        builder.push("FRACTURED VEX");
+        FRACTURED_VEX_SPAWN_WEIGHT = builder
+                .comment("Fractured vex spawn weight")
+                .defineInRange("fractured_vex-spawn_weight", 13, 0, 1000);
+        FRACTURED_VEX_MIN_COUNT=  builder
+                .comment("Fractured vex spawn minimum amount")
+                .defineInRange("fractured_vex-spawn_min", 1, 0, 100);
+        FRACTURED_VEX_MAX_COUNT=  builder
+                .comment("Fractured vex spawn maximum amount")
+                .defineInRange("fractured_vex-spawn_max", 3, 0, 100);
 
         COMMON_CONFIG = builder.build();
     }

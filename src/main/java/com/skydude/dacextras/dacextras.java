@@ -1,13 +1,27 @@
 package com.skydude.dacextras;
 
 import com.mojang.logging.LogUtils;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.Lifecycle;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
+import net.minecraft.core.Registry;
+import net.minecraft.core.WritableRegistry;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -20,8 +34,13 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Mixins;
+
+import java.util.Optional;
+
+import static com.skydude.dacextras.ModBiomeModifiers.BIOME_MODIFIER_SERIALIZERS;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(dacextras.MODID)
@@ -42,8 +61,8 @@ public class dacextras {
 
         Mixins.addConfigurations("dacextras.mixins.json");
 //        // Register the commonSetup method for modloading
-//        modEventBus.addListener(this::commonSetup);
-
+        modEventBus.addListener(this::commonSetup);
+        ModBiomeModifiers.register(modEventBus);
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
@@ -52,18 +71,13 @@ public class dacextras {
 
  }
 
+
     private void commonSetup(final FMLCommonSetupEvent event) {
-        // Some common setup code
-        //LOGGER.info("HELLO FROM COMMON SETUP");
-     //   LOGGER.info("DIRT BLOCK >> {}", ForgeRegistries.BLOCKS.getKey(Blocks.DIRT));
-
-     //   if (Config.COMMON_CONFIG.logDirtBlock)
-      //      LOGGER.info("DIRT BLOCK >> {}", ForgeRegistries.BLOCKS.getKey(Blocks.DIRT));
-
-     //   LOGGER.info(Config.magicNumberIntroduction + Config.magicNumber);
-
-       // Config.items.forEach((item) -> LOGGER.info("ITEM >> {}", item.toString()));
+        event.enqueueWork(() -> {
+            System.out.println("[dacextras] commonSetup complete. Spawn modifier will be applied via JSON with config overrides.");
+        });
     }
+
 
 
 }
