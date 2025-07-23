@@ -40,6 +40,7 @@ public abstract class OverrideRogue {
       @Inject(method = "execute(Lnet/minecraft/world/entity/Entity;)V", at = @At("HEAD"), cancellable = true)
 
   private static void overrideExecute(Entity entity, CallbackInfo ci) {
+          ci.cancel();
           System.out.println("Mixin OverrideRogue.execute() triggered with entity: " + entity);
 
           if(entity == null){
@@ -81,9 +82,6 @@ public abstract class OverrideRogue {
 
 
 
-
-
-
             Objects.requireNonNull(living.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(Config.ROGUE_MAX_HEALTH.get());
             // set the health to amx health so no glitches happen
             living.setHealth(living.getMaxHealth());
@@ -93,44 +91,42 @@ public abstract class OverrideRogue {
             Objects.requireNonNull(living.getAttribute(Attributes.MOVEMENT_SPEED)).setBaseValue(Config.ROGUE_SPEED.get());
             Objects.requireNonNull(living.getAttribute(Attributes.ATTACK_SPEED)).setBaseValue(Config.ROGUE_ATTACK_SPEED.get());
 
-            if (entity instanceof Player) {
+
                 Player _player = (Player)entity;
-                _player.getInventory().armor.set(3, new ItemStack((ItemLike) DungeonsAndCombatModItems.ROGUE_HELMET.get()));
-                _player.getInventory().setChanged();
-            } else if (entity instanceof LivingEntity) {
-                LivingEntity _living = (LivingEntity)entity;
-                _living.setItemSlot(EquipmentSlot.HEAD, new ItemStack((ItemLike)DungeonsAndCombatModItems.ROGUE_HELMET.get()));
-            }
+                if(_player.getItemBySlot(EquipmentSlot.HEAD).isEmpty()) {
+                    _player.setItemSlot(EquipmentSlot.HEAD, new ItemStack(Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Config.ROGUE_HELMET.get())))));
+
+                    _player.getInventory().setChanged();
+                }
+
 
             if (entity instanceof Player) {
-                Player _player = (Player)entity;
+                LogUtils.getLogger().info("player is exiled");
+
                 if(_player.getItemBySlot(EquipmentSlot.CHEST).isEmpty()) {
-                    _player.getInventory().armor.set(2, new ItemStack(ForgeRegistries.ITEMS.getValue( new ResourceLocation(Config.ROGUE_CHESTPLATE.get()))));
+                  //  _player.getInventory().armor.set(2, new ItemStack(Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Config.ROGUE_CHESTPLATE.get())))));
+                //   _player.setItemSlot(EquipmentSlot.CHEST, ;
                     _player.getInventory().setChanged();
                     LogUtils.getLogger().info("exiled is exiled");
                 }
-            } else if (entity instanceof LivingEntity) {
-                LivingEntity _living = (LivingEntity)entity;
-                _living.setItemSlot(EquipmentSlot.CHEST, new ItemStack((ItemLike)DungeonsAndCombatModItems.ROGUE_CHESTPLATE.get()));
+            }
 
+
+
+            if (entity instanceof Player) {
+
+                if(_player.getItemBySlot(EquipmentSlot.LEGS).isEmpty()) {
+                    _player.getInventory().armor.set(1, new ItemStack(Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Config.ROGUE_LEGGINGS.get())))));
+                    _player.getInventory().setChanged();
+}
             }
 
             if (entity instanceof Player) {
-                Player _player = (Player)entity;
-                _player.getInventory().armor.set(1, new ItemStack((ItemLike)DungeonsAndCombatModItems.ROGUE_LEGGINGS.get()));
-                _player.getInventory().setChanged();
-            } else if (entity instanceof LivingEntity) {
-                LivingEntity _living = (LivingEntity)entity;
-                _living.setItemSlot(EquipmentSlot.LEGS, new ItemStack((ItemLike)DungeonsAndCombatModItems.ROGUE_LEGGINGS.get()));
-            }
 
-            if (entity instanceof Player) {
-                Player _player = (Player)entity;
-                _player.getInventory().armor.set(0, new ItemStack((ItemLike)DungeonsAndCombatModItems.ROGUE_BOOTS.get()));
-                _player.getInventory().setChanged();
-            } else if (entity instanceof LivingEntity) {
-                LivingEntity _living = (LivingEntity)entity;
-                _living.setItemSlot(EquipmentSlot.FEET, new ItemStack((ItemLike)DungeonsAndCombatModItems.ROGUE_BOOTS.get()));
+                if(_player.getItemBySlot(EquipmentSlot.FEET).isEmpty()) {
+                    _player.getInventory().armor.set(0, new ItemStack(Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Config.ROGUE_BOOTS.get())))));
+                    _player.getInventory().setChanged();
+                }
             }
 
             if (entity instanceof LivingEntity) {
@@ -139,7 +135,7 @@ public abstract class OverrideRogue {
                 _setstack.setCount(1);
                 _entity.setItemInHand(InteractionHand.MAIN_HAND, _setstack);
                 if (_entity instanceof Player) {
-                    Player _player = (Player)_entity;
+
                     _player.getInventory().setChanged();
                 }
             }
@@ -150,7 +146,7 @@ public abstract class OverrideRogue {
                 _setstack.setCount(1);
                 _entity.setItemInHand(InteractionHand.OFF_HAND, _setstack);
                 if (_entity instanceof Player) {
-                    Player _player = (Player)_entity;
+
                     _player.getInventory().setChanged();
                 }
             }

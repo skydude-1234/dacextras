@@ -33,6 +33,16 @@ public class Config {
     public static ForgeConfigSpec.ConfigValue<String> BOUNTY_LEGGINGS;
     public static ForgeConfigSpec.ConfigValue<String> BOUNTY_BOOTS;
 
+    public static ForgeConfigSpec.DoubleValue ONI_MAX_HEALTH;
+    public static ForgeConfigSpec.DoubleValue ONI_LUCK;
+    public static ForgeConfigSpec.DoubleValue ONI_DAMAGE;
+    public static ForgeConfigSpec.DoubleValue ONI_SPEED;
+    public static ForgeConfigSpec.DoubleValue ONI_ATTACK_SPEED;
+    public static ForgeConfigSpec.ConfigValue<String> ONI_HELMET;
+    public static ForgeConfigSpec.ConfigValue<String> ONI_CHESTPLATE;
+    public static ForgeConfigSpec.ConfigValue<String> ONI_LEGGINGS;
+    public static ForgeConfigSpec.ConfigValue<String> ONI_BOOTS;
+
     public static ForgeConfigSpec.DoubleValue KAMATH_MOVEMENT_SPEED;
     public static ForgeConfigSpec.DoubleValue KAMATH_MAX_HEALTH;
     public static ForgeConfigSpec.DoubleValue KAMATH_ARMOR;
@@ -125,6 +135,41 @@ public class Config {
                 .comment("Starting Leggings for bounty hunter")
                 .define("bounty_leggings", "minecraft:iron_leggings");
         BOUNTY_BOOTS= builder
+                .comment("Starting Boots for bounty hunter")
+                .define("bounty_boots","minecraft:iron_boots");
+        builder.pop();
+        builder.push(" Oni Slayer CONFIG");
+        ONI_MAX_HEALTH = builder
+                .comment("Max Health for bounty hunter")
+                .defineInRange("bounty_max_health", 18.0F, 1.0F, 1000.0F);
+
+        ONI_LUCK = builder
+                .comment("Luck for Rogue")
+                .defineInRange("bounty_luck", 1.0F, 0.0F, 100.0F);
+
+        ONI_DAMAGE = builder
+                .comment("Attack Damage for bounty hunter")
+                .defineInRange("bounty_damage", 1.2F, 0.0F, 100.0F);
+
+        ONI_SPEED = builder
+                .comment("Speed for bounty hunter")
+                .defineInRange("bounty_speed", 0.095, 0.0F, 100.0F);
+
+        ONI_ATTACK_SPEED = builder
+                .comment("Attack Speed for bounty hunter")
+                .defineInRange("bounty_attack_speed", 4.2, 0, 100);
+
+        ONI_HELMET = builder
+                .comment("Starting Helmet for bounty hunter")
+                .define("bounty_helmet", "minecraft:iron_helmet");
+        ONI_CHESTPLATE= builder
+                .comment("Starting Chestplate for bounty hunter")
+                .define("bounty_chestplate", "minecraft:iron_chestplate");
+        //Item.byId(Item.getId(DungeonsAndCombatModItems.ROGUE_CHESTPLATE.get())));
+        ONI_LEGGINGS= builder
+                .comment("Starting Leggings for bounty hunter")
+                .define("bounty_leggings", "minecraft:iron_leggings");
+        ONI_BOOTS= builder
                 .comment("Starting Boots for bounty hunter")
                 .define("bounty_boots","minecraft:iron_boots");
 

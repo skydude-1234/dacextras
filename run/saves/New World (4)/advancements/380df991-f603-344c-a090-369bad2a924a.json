@@ -1,73 +1,25 @@
 {
-  "dungeons_and_combat:dungeons_and_combat": {
-    "criteria": {
-      "dungeons_and_combat_0": "2025-07-19 17:50:56 -0400"
-    },
-    "done": true
-  },
   "minecraft:recipes/decorations/crafting_table": {
     "criteria": {
-      "unlock_right_away": "2025-07-19 17:50:57 -0400"
+      "unlock_right_away": "2025-07-22 23:59:12 -0400"
     },
     "done": true
   },
   "minecraft:adventure/adventuring_time": {
     "criteria": {
-      "minecraft:forest": "2025-07-19 17:50:58 -0400"
+      "minecraft:forest": "2025-07-22 23:59:12 -0400"
     },
     "done": false
   },
-  "dungeons_and_combat:origin": {
+  "minecraft:recipes/decorations/chest": {
     "criteria": {
-      "origin_0": "2025-07-19 17:51:16 -0400"
+      "has_lots_of_items": "2025-07-22 23:59:16 -0400"
     },
     "done": true
   },
-  "dungeons_and_combat:the_rogue": {
+  "minecraft:story/shiny_gear": {
     "criteria": {
-      "the_rogue_0": "2025-07-19 17:51:16 -0400"
-    },
-    "done": true
-  },
-  "minecraft:adventure/root": {
-    "criteria": {
-      "killed_by_something": "2025-07-19 17:51:45 -0400"
-    },
-    "done": true
-  },
-  "minecraft:nether/explore_nether": {
-    "criteria": {
-      "minecraft:soul_sand_valley": "2025-07-22 17:19:37 -0400"
-    },
-    "done": false
-  },
-  "minecraft:nether/root": {
-    "criteria": {
-      "entered_nether": "2025-07-22 17:19:35 -0400"
-    },
-    "done": true
-  },
-  "minecraft:recipes/tools/flint_and_steel": {
-    "criteria": {
-      "has_obsidian": "2025-07-22 17:19:17 -0400"
-    },
-    "done": true
-  },
-  "minecraft:story/enter_the_nether": {
-    "criteria": {
-      "entered_nether": "2025-07-22 17:19:35 -0400"
-    },
-    "done": true
-  },
-  "minecraft:story/form_obsidian": {
-    "criteria": {
-      "obsidian": "2025-07-22 17:19:17 -0400"
-    },
-    "done": true
-  },
-  "minecraft:recipes/decorations/enchanting_table": {
-    "criteria": {
-      "has_obsidian": "2025-07-22 17:19:17 -0400"
+      "diamond_leggings": "2025-07-22 23:59:40 -0400"
     },
     "done": true
   },

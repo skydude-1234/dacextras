@@ -87,3 +87,28 @@
 	#Range: 0 ~ 100
 	fractured_vex-spawn_max = 3
 
+[" Oni Slayer CONFIG"]
+	#Max Health for bounty hunter
+	#Range: 1.0 ~ 1000.0
+	bounty_max_health = 18.0
+	#Luck for Rogue
+	#Range: 0.0 ~ 100.0
+	bounty_luck = 1.0
+	#Attack Damage for bounty hunter
+	#Range: 0.0 ~ 100.0
+	bounty_damage = 1.2000000476837158
+	#Speed for bounty hunter
+	#Range: 0.0 ~ 100.0
+	bounty_speed = 0.095
+	#Attack Speed for bounty hunter
+	#Range: 0.0 ~ 100.0
+	bounty_attack_speed = 4.2
+	#Starting Helmet for bounty hunter
+	bounty_helmet = "minecraft:iron_helmet"
+	#Starting Chestplate for bounty hunter
+	bounty_chestplate = "minecraft:iron_chestplate"
+	#Starting Leggings for bounty hunter
+	bounty_leggings = "minecraft:iron_leggings"
+	#Starting Boots for bounty hunter
+	bounty_boots = "minecraft:iron_boots"
+
