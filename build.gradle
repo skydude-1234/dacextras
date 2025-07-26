@@ -205,7 +205,7 @@ dependencies {
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}")
 
     ///DACCCC
-    implementation fg.deobf("curse.maven:dungeons-and-combat-1128235:6735006")
+    implementation fg.deobf("curse.maven:dungeons-and-combat-1128235:6776926")
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 

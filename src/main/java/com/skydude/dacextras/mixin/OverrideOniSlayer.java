@@ -16,6 +16,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -66,29 +67,26 @@ public class OverrideOniSlayer {
                 living.getAttribute(Attributes.ATTACK_SPEED).setBaseValue(3.95);
                 // SET HEALTH TO MAX TO AVOID BUGS
                 living.setHealth(living.getMaxHealth());
-                if (entity instanceof Player) {
-                    Player _player = (Player)entity;
-                    _player.getInventory().armor.set(3, new ItemStack((ItemLike)DungeonsAndCombatModItems.ONI_SLAYER_HELMET.get()));
+                Player _player = (Player)entity;
+
+                if(_player.getItemBySlot(EquipmentSlot.HEAD).isEmpty()) {
+                    _player.getInventory().armor.set(3, new ItemStack(Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Config.BOUNTY_LEGGINGS.get())))));
+                    _player.getInventory().setChanged();
+                }
+                if(_player.getItemBySlot(EquipmentSlot.CHEST).isEmpty()) {
+                    _player.getInventory().armor.set(2, new ItemStack(Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Config.BOUNTY_LEGGINGS.get())))));
+                    _player.getInventory().setChanged();
+                }
+                if(_player.getItemBySlot(EquipmentSlot.LEGS).isEmpty()) {
+                    _player.getInventory().armor.set(1, new ItemStack(Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Config.BOUNTY_LEGGINGS.get())))));
+                    _player.getInventory().setChanged();
+                }
+                if(_player.getItemBySlot(EquipmentSlot.FEET).isEmpty()) {
+                    _player.getInventory().armor.set(0, new ItemStack(Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Config.BOUNTY_LEGGINGS.get())))));
                     _player.getInventory().setChanged();
                 }
 
-                if (entity instanceof Player) {
-                    Player _player = (Player)entity;
-                    _player.getInventory().armor.set(2, new ItemStack((ItemLike)DungeonsAndCombatModItems.ONI_SLAYER_CHESTPLATE.get()));
-                    _player.getInventory().setChanged();
-                }
 
-                if (entity instanceof Player) {
-                    Player _player = (Player)entity;
-                    _player.getInventory().armor.set(1, new ItemStack((ItemLike)DungeonsAndCombatModItems.ONI_SLAYER_LEGGINGS.get()));
-                    _player.getInventory().setChanged();
-                }
-
-                if (entity instanceof Player) {
-                    Player _player = (Player)entity;
-                    _player.getInventory().armor.set(0, new ItemStack((ItemLike)DungeonsAndCombatModItems.ONI_SLAYER_BOOTS.get()));
-                    _player.getInventory().setChanged();
-                }
 
                 if (entity instanceof LivingEntity) {
                     LivingEntity _entity = (LivingEntity)entity;
@@ -96,7 +94,7 @@ public class OverrideOniSlayer {
                     _setstack.setCount(1);
                     _entity.setItemInHand(InteractionHand.MAIN_HAND, _setstack);
                     if (_entity instanceof Player) {
-                        Player _player = (Player)_entity;
+
                         _player.getInventory().setChanged();
                     }
                 }
@@ -107,7 +105,7 @@ public class OverrideOniSlayer {
                     _setstack.setCount(1);
                     _entity.setItemInHand(InteractionHand.OFF_HAND, _setstack);
                     if (_entity instanceof Player) {
-                        Player _player = (Player)_entity;
+
                         _player.getInventory().setChanged();
                     }
                 }

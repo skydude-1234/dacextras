@@ -126,52 +126,51 @@ public class Config {
 
         BOUNTY_HELMET = builder
                 .comment("Starting Helmet for bounty hunter")
-                .define("bounty_helmet", "minecraft:iron_helmet");
+                .define("bounty_helmet", "dungeons_and_combat:bounty_hunter_helmet");
         BOUNTY_CHESTPLATE= builder
                 .comment("Starting Chestplate for bounty hunter")
-                .define("bounty_chestplate", "minecraft:iron_chestplate");
+                .define("bounty_chestplate", "dungeons_and_combat:bounty_hunter_chestplate");
         //Item.byId(Item.getId(DungeonsAndCombatModItems.ROGUE_CHESTPLATE.get())));
         BOUNTY_LEGGINGS= builder
                 .comment("Starting Leggings for bounty hunter")
-                .define("bounty_leggings", "minecraft:iron_leggings");
+                .define("bounty_leggings", "dungeons_and_combat:bounty_hunter_leggings");
         BOUNTY_BOOTS= builder
                 .comment("Starting Boots for bounty hunter")
-                .define("bounty_boots","minecraft:iron_boots");
+                .define("bounty_boots","dungeons_and_combat:bounty_hunter_boots");
         builder.pop();
         builder.push(" Oni Slayer CONFIG");
         ONI_MAX_HEALTH = builder
                 .comment("Max Health for bounty hunter")
-                .defineInRange("bounty_max_health", 18.0F, 1.0F, 1000.0F);
+                .defineInRange("oni_health", 18.0F, 1.0F, 1000.0F);
 
         ONI_LUCK = builder
                 .comment("Luck for Rogue")
-                .defineInRange("bounty_luck", 1.0F, 0.0F, 100.0F);
+                .defineInRange("oni_luck", 1.0F, 0.0F, 100.0F);
 
         ONI_DAMAGE = builder
                 .comment("Attack Damage for bounty hunter")
-                .defineInRange("bounty_damage", 1.2F, 0.0F, 100.0F);
+                .defineInRange("oni_damage", 1.2F, 0.0F, 100.0F);
 
         ONI_SPEED = builder
                 .comment("Speed for bounty hunter")
-                .defineInRange("bounty_speed", 0.095, 0.0F, 100.0F);
+                .defineInRange("oni_speed", 0.095, 0.0F, 100.0F);
 
         ONI_ATTACK_SPEED = builder
                 .comment("Attack Speed for bounty hunter")
-                .defineInRange("bounty_attack_speed", 4.2, 0, 100);
+                .defineInRange("oni_attack_speed", 4.2, 0, 100);
 
         ONI_HELMET = builder
                 .comment("Starting Helmet for bounty hunter")
-                .define("bounty_helmet", "minecraft:iron_helmet");
+                .define("oni_helmet", "dungeons_and_combat:oni_slayer_helmet");
         ONI_CHESTPLATE= builder
                 .comment("Starting Chestplate for bounty hunter")
-                .define("bounty_chestplate", "minecraft:iron_chestplate");
-        //Item.byId(Item.getId(DungeonsAndCombatModItems.ROGUE_CHESTPLATE.get())));
+                .define("oni_chestplate", "dungeons_and_combat:oni_slayer_chestplate");
         ONI_LEGGINGS= builder
                 .comment("Starting Leggings for bounty hunter")
-                .define("bounty_leggings", "minecraft:iron_leggings");
+                .define("oni_leggings", "dungeons_and_combat:oni_slayer_leggings");
         ONI_BOOTS= builder
                 .comment("Starting Boots for bounty hunter")
-                .define("bounty_boots","minecraft:iron_boots");
+                .define("oni_boots","dungeons_and_combat:oni_slayer_boots");
 
         builder.pop();
         builder.push(" KAMATH BOSS CONFIG");

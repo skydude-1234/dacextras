@@ -77,17 +77,17 @@ public class OverrideBountyHunter {
 
             Player _player = (Player)entity;
             if(_player.getItemBySlot(EquipmentSlot.HEAD).isEmpty()) {
-                _player.getInventory().armor.set(0, new ItemStack(Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Config.BOUNTY_HELMET.get())))));
+                _player.getInventory().armor.set(3, new ItemStack(Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Config.BOUNTY_HELMET.get())))));
                 _player.getInventory().setChanged();
             }
 
             if(_player.getItemBySlot(EquipmentSlot.CHEST).isEmpty()) {
-                _player.getInventory().armor.set(0, new ItemStack(Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Config.BOUNTY_CHESTPLATE.get())))));
+                _player.getInventory().armor.set(2, new ItemStack(Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Config.BOUNTY_CHESTPLATE.get())))));
                 _player.getInventory().setChanged();
             }
 
             if(_player.getItemBySlot(EquipmentSlot.LEGS).isEmpty()) {
-                _player.getInventory().armor.set(0, new ItemStack(Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Config.BOUNTY_LEGGINGS.get())))));
+                _player.getInventory().armor.set(1, new ItemStack(Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Config.BOUNTY_LEGGINGS.get())))));
                 _player.getInventory().setChanged();
             }
 
