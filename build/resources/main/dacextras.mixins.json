@@ -8,8 +8,15 @@
     "KamathOverride",
     "OverrideBountyHunter",
     "OverrideBountyHunterEver",
+    "OverrideExiled",
+    "OverrideForgottenKnight",
+    "OverrideForgottenKnightever",
+    "OverrideOniSlayer",
+    "OverrideOniSlayerEver",
     "OverrideRogue",
-    "OverrideRogueEver"
+    "OverrideRogueEver",
+    "OverrideTitan",
+    "OverrideVagabond"
   ],
   "client": [
   ],

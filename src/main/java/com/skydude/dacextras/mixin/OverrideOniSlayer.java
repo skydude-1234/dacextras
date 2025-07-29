@@ -1,9 +1,10 @@
 package com.skydude.dacextras.mixin;
 
+import com.mojang.logging.LogUtils;
 import com.skydude.dacextras.Config;
 import net.mcreator.dungeonsandcombat.init.DungeonsAndCombatModItems;
-import net.mcreator.dungeonsandcombat.procedures.BountyHunterChoosedProcedure;
 import net.mcreator.dungeonsandcombat.procedures.OniSlayerChoosedProcedure;
+import net.mcreator.dungeonsandcombat.procedures.RogueChoosedProcedure;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.resources.ResourceLocation;
@@ -24,93 +25,86 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Objects;
 
-
 @Mixin(value = OniSlayerChoosedProcedure.class, remap = false)
-public class OverrideOniSlayer {
+public abstract class OverrideOniSlayer {
+    @Inject(method = "execute", at = @At("HEAD"), cancellable = true)
+    //  @Inject(method = "execute(Lnet/minecraft/world/entity/Entity;)V", at = @At("HEAD"), cancellable = true)
 
+    private static void overrideExecute(Entity entity, CallbackInfo ci ) {
+        ci.cancel();
+        System.out.println("Mixin OverrideRogue.execute() triggered with entity: " + entity);
+        if (!(entity instanceof Player player)) {
+            System.out.println("entity is not instanceof Player player");
+            return;
+        } else{
+            player.closeContainer();
+        }
 
-    @Inject(method = "execute(Lnet/minecraft/world/entity/Entity;)V", at = @At("HEAD"), cancellable = true)
-    private static void overrideExecute(Entity entity, CallbackInfo ci) {
-        {
-            if (entity != null) {
-                if (entity instanceof Player) {
-                    Player _player = (Player)entity;
-                    _player.closeContainer();
+        if (entity instanceof ServerPlayer serverPlayer) {
+            Advancement adv = serverPlayer.server.getAdvancements().getAdvancement(new ResourceLocation("dungeons_and_combat:origin"));
+            AdvancementProgress _ap = serverPlayer.getAdvancements().getOrStartProgress(adv);
+
+            if (!_ap.isDone()) {
+                for(String criteria : _ap.getRemainingCriteria()) {
+                    serverPlayer.getAdvancements().award(adv, criteria);
                 }
-
-                if (entity instanceof ServerPlayer) {
-                    ServerPlayer _player = (ServerPlayer)entity;
-                    Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("dungeons_and_combat:origin"));
-                    AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
-                    if (!_ap.isDone()) {
-                        for(String criteria : _ap.getRemainingCriteria()) {
-                            _player.getAdvancements().award(_adv, criteria);
-                        }
-                    }
-                }
-
-                if (entity instanceof ServerPlayer) {
-                    ServerPlayer _player = (ServerPlayer)entity;
-                    Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("dungeons_and_combat:the_bounty_hunter"));
-                    AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
-                    if (!_ap.isDone()) {
-                        for(String criteria : _ap.getRemainingCriteria()) {
-                            _player.getAdvancements().award(_adv, criteria);
-                        }
-                    }
-                }
-                LivingEntity living = (LivingEntity) entity;
-                living.getAttribute(Attributes.LUCK).setBaseValue((double)1.0F);
-                living.getAttribute(Attributes.MAX_HEALTH).setBaseValue((double)18.0F);
-                living.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(1.6);
-                living.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0.12);
-                living.getAttribute(Attributes.ATTACK_SPEED).setBaseValue(3.95);
-                // SET HEALTH TO MAX TO AVOID BUGS
-                living.setHealth(living.getMaxHealth());
-                Player _player = (Player)entity;
-
-                if(_player.getItemBySlot(EquipmentSlot.HEAD).isEmpty()) {
-                    _player.getInventory().armor.set(3, new ItemStack(Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Config.BOUNTY_LEGGINGS.get())))));
-                    _player.getInventory().setChanged();
-                }
-                if(_player.getItemBySlot(EquipmentSlot.CHEST).isEmpty()) {
-                    _player.getInventory().armor.set(2, new ItemStack(Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Config.BOUNTY_LEGGINGS.get())))));
-                    _player.getInventory().setChanged();
-                }
-                if(_player.getItemBySlot(EquipmentSlot.LEGS).isEmpty()) {
-                    _player.getInventory().armor.set(1, new ItemStack(Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Config.BOUNTY_LEGGINGS.get())))));
-                    _player.getInventory().setChanged();
-                }
-                if(_player.getItemBySlot(EquipmentSlot.FEET).isEmpty()) {
-                    _player.getInventory().armor.set(0, new ItemStack(Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Config.BOUNTY_LEGGINGS.get())))));
-                    _player.getInventory().setChanged();
-                }
-
-
-
-                if (entity instanceof LivingEntity) {
-                    LivingEntity _entity = (LivingEntity)entity;
-                    ItemStack _setstack = (new ItemStack((ItemLike)DungeonsAndCombatModItems.LONG_KATANA.get())).copy();
-                    _setstack.setCount(1);
-                    _entity.setItemInHand(InteractionHand.MAIN_HAND, _setstack);
-                    if (_entity instanceof Player) {
-
-                        _player.getInventory().setChanged();
-                    }
-                }
-
-                if (entity instanceof LivingEntity) {
-                    LivingEntity _entity = (LivingEntity)entity;
-                    ItemStack _setstack = (new ItemStack((ItemLike)DungeonsAndCombatModItems.OLD_SHIELD.get())).copy();
-                    _setstack.setCount(1);
-                    _entity.setItemInHand(InteractionHand.OFF_HAND, _setstack);
-                    if (_entity instanceof Player) {
-
-                        _player.getInventory().setChanged();
-                    }
-                }
-
             }
         }
+        if (entity instanceof ServerPlayer serverPlayer) {
+
+            Advancement _adv = serverPlayer.server.getAdvancements().getAdvancement(new ResourceLocation("dungeons_and_combat:the_oni_slayer"));
+            assert _adv != null;
+
+            AdvancementProgress _ap = serverPlayer.getAdvancements().getOrStartProgress(_adv);
+            if (!_ap.isDone()) {
+                for(String criteria : _ap.getRemainingCriteria()) {
+                    serverPlayer.getAdvancements().award(_adv, criteria);
+                }
+            }
+        }
+
+        Objects.requireNonNull(player.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(Config.ONI_MAX_HEALTH.get());
+        // set the health to amx health so no glitches happen
+        player.setHealth(player.getMaxHealth());
+
+        Objects.requireNonNull(player.getAttribute(Attributes.LUCK)).setBaseValue(Config.ONI_LUCK.get());
+        Objects.requireNonNull(player.getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue(Config.ONI_DAMAGE.get());
+        Objects.requireNonNull(player.getAttribute(Attributes.MOVEMENT_SPEED)).setBaseValue(Config.ONI_SPEED.get());
+        Objects.requireNonNull(player.getAttribute(Attributes.ATTACK_SPEED)).setBaseValue(Config.ONI_ATTACK_SPEED.get());
+        Objects.requireNonNull(player.getAttribute(Attributes.ARMOR)).setBaseValue(Config.ONI_ARMOR.get());
+        Objects.requireNonNull(player.getAttribute(Attributes.ARMOR_TOUGHNESS)).setBaseValue(0);
+
+
+        if(player.getItemBySlot(EquipmentSlot.HEAD).isEmpty()) {
+            player.setItemSlot(EquipmentSlot.HEAD, new ItemStack(Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Config.ONI_HELMET.get())))));
+        }
+
+        if(player.getItemBySlot(EquipmentSlot.CHEST).isEmpty()) {
+            player.setItemSlot(EquipmentSlot.CHEST, new ItemStack(Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Config.ONI_CHESTPLATE.get())))));
+        }
+
+
+        if(player.getItemBySlot(EquipmentSlot.LEGS).isEmpty()) {
+            player.setItemSlot(EquipmentSlot.LEGS, new ItemStack(Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Config.ONI_LEGGINGS.get())))));
+        }
+
+        if(player.getItemBySlot(EquipmentSlot.FEET).isEmpty()) {
+            player.setItemSlot(EquipmentSlot.FEET, new ItemStack(Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Config.ONI_BOOTS.get())))));
+        }
+
+        if(player.getItemBySlot(EquipmentSlot.MAINHAND).isEmpty()){
+
+            player.setItemInHand(InteractionHand.MAIN_HAND, (new ItemStack((ItemLike)DungeonsAndCombatModItems.LONG_KATANA.get())).copy());
+        }
+//        if(player.getItemBySlot(EquipmentSlot.OFFHAND).isEmpty()) {
+//            player.setItemInHand(InteractionHand.OFF_HAND, (new ItemStack((ItemLike) ForgeRegistries..get())).copy());
+//        }
+
+        ci.cancel(); // cancel original method
     }
+
+
+
+
+
 }

@@ -18,6 +18,7 @@ public class Config {
     public static ForgeConfigSpec.DoubleValue ROGUE_DAMAGE;
     public static ForgeConfigSpec.DoubleValue ROGUE_SPEED;
     public static ForgeConfigSpec.DoubleValue ROGUE_ATTACK_SPEED;
+    public static ForgeConfigSpec.DoubleValue ROGUE_ARMOR;
     public static ForgeConfigSpec.ConfigValue<String> ROGUE_HELMET;
     public static ForgeConfigSpec.ConfigValue<String> ROGUE_CHESTPLATE;
     public static ForgeConfigSpec.ConfigValue<String> ROGUE_LEGGINGS;
@@ -28,6 +29,7 @@ public class Config {
     public static ForgeConfigSpec.DoubleValue BOUNTY_DAMAGE;
     public static ForgeConfigSpec.DoubleValue BOUNTY_SPEED;
     public static ForgeConfigSpec.DoubleValue BOUNTY_ATTACK_SPEED;
+    public static ForgeConfigSpec.DoubleValue BOUNTY_ARMOR;
     public static ForgeConfigSpec.ConfigValue<String> BOUNTY_HELMET;
     public static ForgeConfigSpec.ConfigValue<String> BOUNTY_CHESTPLATE;
     public static ForgeConfigSpec.ConfigValue<String> BOUNTY_LEGGINGS;
@@ -38,10 +40,61 @@ public class Config {
     public static ForgeConfigSpec.DoubleValue ONI_DAMAGE;
     public static ForgeConfigSpec.DoubleValue ONI_SPEED;
     public static ForgeConfigSpec.DoubleValue ONI_ATTACK_SPEED;
+    public static ForgeConfigSpec.DoubleValue ONI_ARMOR;
     public static ForgeConfigSpec.ConfigValue<String> ONI_HELMET;
     public static ForgeConfigSpec.ConfigValue<String> ONI_CHESTPLATE;
     public static ForgeConfigSpec.ConfigValue<String> ONI_LEGGINGS;
     public static ForgeConfigSpec.ConfigValue<String> ONI_BOOTS;
+
+    public static ForgeConfigSpec.DoubleValue FORGOTTEN_MAX_HEALTH;
+    public static ForgeConfigSpec.DoubleValue FORGOTTEN_LUCK;
+    public static ForgeConfigSpec.DoubleValue FORGOTTEN_DAMAGE;
+    public static ForgeConfigSpec.DoubleValue FORGOTTEN_SPEED;
+    public static ForgeConfigSpec.DoubleValue FORGOTTEN_ATTACK_SPEED;
+    public static ForgeConfigSpec.DoubleValue FORGOTTEN_ARMOR;
+
+
+    public static ForgeConfigSpec.ConfigValue<String> FORGOTTEN_HELMET;
+    public static ForgeConfigSpec.ConfigValue<String> FORGOTTEN_CHESTPLATE;
+    public static ForgeConfigSpec.ConfigValue<String> FORGOTTEN_LEGGINGS;
+    public static ForgeConfigSpec.ConfigValue<String> FORGOTTEN_BOOTS;
+
+    public static ForgeConfigSpec.DoubleValue EXILED_MAX_HEALTH;
+    public static ForgeConfigSpec.DoubleValue EXILED_LUCK;
+    public static ForgeConfigSpec.DoubleValue EXILED_DAMAGE;
+    public static ForgeConfigSpec.DoubleValue EXILED_SPEED;
+    public static ForgeConfigSpec.DoubleValue EXILED_ATTACK_SPEED;
+    public static ForgeConfigSpec.DoubleValue EXILED_ARMOR;
+
+    public static ForgeConfigSpec.ConfigValue<String> EXILED_HELMET;
+    public static ForgeConfigSpec.ConfigValue<String> EXILED_CHESTPLATE;
+    public static ForgeConfigSpec.ConfigValue<String> EXILED_LEGGINGS;
+    public static ForgeConfigSpec.ConfigValue<String> EXILED_BOOTS;
+
+    public static ForgeConfigSpec.DoubleValue TITAN_MAX_HEALTH;
+    public static ForgeConfigSpec.DoubleValue TITAN_LUCK;
+    public static ForgeConfigSpec.DoubleValue TITAN_DAMAGE;
+    public static ForgeConfigSpec.DoubleValue TITAN_SPEED;
+    public static ForgeConfigSpec.DoubleValue TITAN_ATTACK_SPEED;
+    public static ForgeConfigSpec.DoubleValue TITAN_ARMOR;
+    public static ForgeConfigSpec.DoubleValue TITAN_ARMOR_TOUGHNESS;
+
+    public static ForgeConfigSpec.ConfigValue<String> TITAN_HELMET;
+    public static ForgeConfigSpec.ConfigValue<String> TITAN_CHESTPLATE;
+    public static ForgeConfigSpec.ConfigValue<String> TITAN_LEGGINGS;
+    public static ForgeConfigSpec.ConfigValue<String> TITAN_BOOTS;
+
+    public static ForgeConfigSpec.DoubleValue VAGABOND_MAX_HEALTH;
+    public static ForgeConfigSpec.DoubleValue VAGABOND_LUCK;
+    public static ForgeConfigSpec.DoubleValue VAGABOND_DAMAGE;
+    public static ForgeConfigSpec.DoubleValue VAGABOND_SPEED;
+    public static ForgeConfigSpec.DoubleValue VAGABOND_ATTACK_SPEED;
+    public static ForgeConfigSpec.DoubleValue VAGABOND_ARMOR;
+
+    public static ForgeConfigSpec.ConfigValue<String> VAGABOND_HELMET;
+    public static ForgeConfigSpec.ConfigValue<String> VAGABOND_CHESTPLATE;
+    public static ForgeConfigSpec.ConfigValue<String> VAGABOND_LEGGINGS;
+    public static ForgeConfigSpec.ConfigValue<String> VAGABOND_BOOTS;
 
     public static ForgeConfigSpec.DoubleValue KAMATH_MOVEMENT_SPEED;
     public static ForgeConfigSpec.DoubleValue KAMATH_MAX_HEALTH;
@@ -71,7 +124,7 @@ public class Config {
 
         ROGUE_MAX_HEALTH = builder
                 .comment("Max Health for Rogue")
-                .defineInRange("rogue_max_health", 106.0F, 1.0F, 1000.0F);
+                .defineInRange("rogue_max_health", 16.0F, 1.0F, 1000.0F);
 
         ROGUE_LUCK = builder
                 .comment("Luck for Rogue")
@@ -88,6 +141,9 @@ public class Config {
         ROGUE_ATTACK_SPEED = builder
                 .comment("Attack Speed for Rogue")
                 .defineInRange("rogue_attack_speed", 4.2, 0, 100);
+        ROGUE_ARMOR = builder
+                .comment("Armorfor Rogue")
+                .defineInRange("rogue_armor", 0.0F, 0.0, 100);
 
         ROGUE_HELMET = builder
                 .comment("Starting Helmet for Rogue")
@@ -123,6 +179,10 @@ public class Config {
         BOUNTY_ATTACK_SPEED = builder
                 .comment("Attack Speed for bounty hunter")
                 .defineInRange("bounty_attack_speed", 3.95, 0, 100);
+        BOUNTY_ARMOR = builder
+                .comment("Armor for bounty hunter")
+                .defineInRange("bounty_armor", 0.0F, 0.0, 100);
+
 
         BOUNTY_HELMET = builder
                 .comment("Starting Helmet for bounty hunter")
@@ -140,37 +200,195 @@ public class Config {
         builder.pop();
         builder.push(" Oni Slayer CONFIG");
         ONI_MAX_HEALTH = builder
-                .comment("Max Health for bounty hunter")
+                .comment("Max Health for oni slayer")
                 .defineInRange("oni_health", 18.0F, 1.0F, 1000.0F);
 
         ONI_LUCK = builder
-                .comment("Luck for Rogue")
+                .comment("Luck for oni slayer")
                 .defineInRange("oni_luck", 1.0F, 0.0F, 100.0F);
 
         ONI_DAMAGE = builder
-                .comment("Attack Damage for bounty hunter")
+                .comment("Attack Damage for oni slayer")
                 .defineInRange("oni_damage", 1.2F, 0.0F, 100.0F);
 
         ONI_SPEED = builder
-                .comment("Speed for bounty hunter")
+                .comment("Speed for oni slayer")
                 .defineInRange("oni_speed", 0.095, 0.0F, 100.0F);
 
         ONI_ATTACK_SPEED = builder
-                .comment("Attack Speed for bounty hunter")
+                .comment("Attack Speed for oni slayer")
                 .defineInRange("oni_attack_speed", 4.2, 0, 100);
+        ONI_ARMOR = builder
+                .comment("Armor for oni slayer")
+                .defineInRange("oni_armor", 0.0F, 0, 100);
+
 
         ONI_HELMET = builder
-                .comment("Starting Helmet for bounty hunter")
+                .comment("Starting Helmet for oni slayer")
                 .define("oni_helmet", "dungeons_and_combat:oni_slayer_helmet");
         ONI_CHESTPLATE= builder
-                .comment("Starting Chestplate for bounty hunter")
+                .comment("Starting Chestplate for oni slayer")
                 .define("oni_chestplate", "dungeons_and_combat:oni_slayer_chestplate");
         ONI_LEGGINGS= builder
-                .comment("Starting Leggings for bounty hunter")
+                .comment("Starting Leggings for oni slayer")
                 .define("oni_leggings", "dungeons_and_combat:oni_slayer_leggings");
         ONI_BOOTS= builder
-                .comment("Starting Boots for bounty hunter")
+                .comment("Starting Boots for oni slayer")
                 .define("oni_boots","dungeons_and_combat:oni_slayer_boots");
+
+        builder.pop();
+        builder.push(" Forgotten Knight CONFIG");
+        FORGOTTEN_MAX_HEALTH = builder
+                .comment("Max Health for Forgotten Knight")
+                .defineInRange("FORGOTTEN_health", 20.0F, 1.0F, 1000.0F);
+
+        FORGOTTEN_LUCK = builder
+                .comment("Luck for Forgotten Knight")
+                .defineInRange("FORGOTTEN_luck", 0.0F, 0.0F, 100.0F);
+
+        FORGOTTEN_DAMAGE = builder
+                .comment("Attack Damage for Forgotten Knight")
+                .defineInRange("FORGOTTEN_damage", 1.4F, 0.0F, 100.0F);
+        FORGOTTEN_SPEED = builder
+                .comment("Speed for Forgotten Knight")
+                .defineInRange("FORGOTTEN_speed", 0.095, 0.0F, 100.0F);
+
+        FORGOTTEN_ATTACK_SPEED = builder
+                .comment("Attack Speed for Forgotten Knight")
+                .defineInRange("FORGOTTEN_attack_speed", 3.95, 0, 100);
+        FORGOTTEN_ARMOR = builder
+                .comment("Armor for Forgotten Knight")
+                .defineInRange("FORGOTTEN_armor", 2.0F, 0.0, 100.0F);
+
+        FORGOTTEN_HELMET = builder
+                .comment("Starting Helmet for Forgotten Knight")
+                .define("FORGOTTEN_helmet", "dungeons_and_combat:forgotten_knight_helmet");
+        FORGOTTEN_CHESTPLATE= builder
+                .comment("Starting Chestplate for Forgotten Knight")
+                .define("FORGOTTEN_chestplate", "dungeons_and_combat:forgotten_knight_chestplate");
+        FORGOTTEN_LEGGINGS= builder
+                .comment("Starting Leggings for Forgotten Knight")
+                .define("FORGOTTEN_leggings", "dungeons_and_combat:forgotten_knight_leggings");
+        FORGOTTEN_BOOTS= builder
+                .comment("Starting Boots for Forgotten Knight")
+                .define("FORGOTTEN_boots","dungeons_and_combat:forgotten_knight_boots");
+
+        builder.pop();
+        builder.push("  EXILED CONFIG");
+        EXILED_MAX_HEALTH = builder
+                .comment("Max Health for Exiled")
+                .defineInRange("EXILED_health", 18.0F, 1.0F, 1000.0F);
+
+        EXILED_LUCK = builder
+                .comment("Luck for Exiled")
+                .defineInRange("EXILED_luck", 1.0F, 0.0F, 100.0F);
+
+        EXILED_DAMAGE = builder
+                .comment("Attack Damage for Exiled")
+                .defineInRange("EXILED_damage", 1.0F, 0.0F, 100.0F);
+        EXILED_SPEED = builder
+                .comment("Speed for Exiled")
+                .defineInRange("EXILED_speed", 0.11, 0.0F, 100.0F);
+
+        EXILED_ATTACK_SPEED = builder
+                .comment("Attack Speed for Exiled")
+                .defineInRange("EXILED_attack_speed", 3.95, 0, 100);
+        EXILED_ARMOR = builder
+                .comment("Armor for Exiled")
+                .defineInRange("EXILED_armor", 0.0F, 0.0, 100.0F);
+
+        EXILED_HELMET = builder
+                .comment("Starting Helmet for Exiled")
+                .define("EXILED_helmet", "dungeons_and_combat:exiled_helmet");
+        EXILED_CHESTPLATE= builder
+                .comment("Starting Chestplate for Exiled")
+                .define("EXILED_chestplate", "dungeons_and_combat:exiled_chestplate");
+        EXILED_LEGGINGS= builder
+                .comment("Starting Leggings for Exiled")
+                .define("EXILED_leggings", "minecraft:air");
+        EXILED_BOOTS= builder
+                .comment("Starting Boots for Exiled")
+                .define("EXILED_BOOTS","minecraft:air");
+        builder.pop();
+        builder.push("  TITAN CONFIG");
+        TITAN_MAX_HEALTH = builder
+                .comment("Max Health for Titan")
+                .defineInRange("EXILED_health", 28.0F, 1.0F, 1000.0F);
+
+        TITAN_LUCK = builder
+                .comment("Luck for Titan")
+                .defineInRange("TITAN_luck", 0.0F, 0.0F, 100.0F);
+
+        TITAN_DAMAGE = builder
+                .comment("Attack Damage for Titan")
+                .defineInRange("TITAN_damage", 1.0F, 0.0F, 100.0F);
+        TITAN_SPEED = builder
+                .comment("Speed for Titan")
+                .defineInRange("TITAN_speed", 0.085, 0.0F, 100.0F);
+
+        TITAN_ATTACK_SPEED = builder
+                .comment("Attack Speed for Titan")
+                .defineInRange("TITAN_attack_speed", 3.85, 0, 100);
+        TITAN_ARMOR = builder
+                .comment("Armor for Titan")
+                .defineInRange("TITAN_armor", 2.0F, 0.0, 100.0F);
+        TITAN_ARMOR_TOUGHNESS = builder
+                .comment("Armor for Titan")
+                .defineInRange("TITAN_armor", 0.1, 0.0, 100.0F);
+
+        TITAN_HELMET = builder
+                .comment("Starting Helmet for Titan")
+                .define("TITAN_helmet", "dungeons_and_combat:titan_helmet");
+        TITAN_CHESTPLATE= builder
+                .comment("Starting Chestplate for Titan")
+                .define("TITAN_chestplate", "dungeons_and_combat:titan_chestplate");
+        TITAN_LEGGINGS= builder
+                .comment("Starting Leggings for Titan")
+                .define("TITAN_leggings", "dungeons_and_combat:titan_leggings");
+        TITAN_BOOTS= builder
+                .comment("Starting Boots for Titan")
+                .define("TITAN_boots","dungeons_and_combat:titan_boots");
+        builder.pop();
+        builder.push("VAGABOND CONFIG");
+
+        VAGABOND_MAX_HEALTH = builder
+                .comment("Max Health for vagabond")
+                .defineInRange("vagabond_health", 20.0F, 1.0F, 1000.0F);
+
+        VAGABOND_LUCK = builder
+                .comment("Luck for vagabond")
+                .defineInRange("vagabond_luck", 0.0F, 0.0F, 100.0F);
+
+        VAGABOND_DAMAGE = builder
+                .comment("Attack Damage for vagabond")
+                .defineInRange("vagabond_damage", 1.0F, 0.0F, 100.0F);
+
+        VAGABOND_SPEED = builder
+                .comment("Speed for vagabond ")
+                .defineInRange("vagabond_speed", 0.1, 0.0F, 100.0F);
+
+        VAGABOND_ATTACK_SPEED = builder
+                .comment("Attack Speed for vagabond")
+                .defineInRange("vagabond_attack_speed", 4.0, 0, 100);
+        VAGABOND_ATTACK_SPEED = builder
+                .comment("Attack Speed for vagabond ")
+                .defineInRange("vagabond_attack_speed", 4.0, 0, 100);
+        VAGABOND_ARMOR = builder
+                .comment("Attack Speed for vagabond ")
+                .defineInRange("vagabond_attack_speed", 0.0F, 0.0, 100);
+
+        VAGABOND_HELMET = builder
+                .comment("Starting Helmet for vagabond")
+                .define("vagabond_helmet", "dungeons_and_combat:vagabond_helmet");
+        VAGABOND_CHESTPLATE= builder
+                .comment("Starting Chestplate for vagabond")
+                .define("vagabond_chestplate", "dungeons_and_combat:vagabond_chestplate");
+        VAGABOND_LEGGINGS= builder
+                .comment("Starting Leggings for vagabond")
+                .define("vagabond_leggings", "dungeons_and_combat:vagabond_leggings");
+        VAGABOND_BOOTS= builder
+                .comment("Starting Boots for vagabond")
+                .define("vagabond_boots","dungeons_and_combat:vagabond_boots");
 
         builder.pop();
         builder.push(" KAMATH BOSS CONFIG");

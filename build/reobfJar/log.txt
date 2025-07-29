@@ -157,19 +157,27 @@ Writing Output: /home/sky/Music/dacextras/build/reobfJar/output.jar
   com/skydude/dacextras/AddFracturedVexSpawnModifier.class
   com/skydude/dacextras/AttributeModifiers.class
   com/skydude/dacextras/Config.class
+  com/skydude/dacextras/CustomClasses.class
   com/skydude/dacextras/ModBiomeModifiers.class
   com/skydude/dacextras/dacextras.class
   com/skydude/dacextras/mixin/
   com/skydude/dacextras/mixin/KamathOverride.class
   com/skydude/dacextras/mixin/OverrideBountyHunter.class
   com/skydude/dacextras/mixin/OverrideBountyHunterEver.class
+  com/skydude/dacextras/mixin/OverrideExiled.class
+  com/skydude/dacextras/mixin/OverrideForgottenKnight.class
+  com/skydude/dacextras/mixin/OverrideForgottenKnightever.class
   com/skydude/dacextras/mixin/OverrideOniSlayer.class
   com/skydude/dacextras/mixin/OverrideOniSlayerEver.class
   com/skydude/dacextras/mixin/OverrideRogue.class
   com/skydude/dacextras/mixin/OverrideRogueEver.class
+  com/skydude/dacextras/mixin/OverrideTitan.class
+  com/skydude/dacextras/mixin/OverrideVagabond.class
   dacextras.mixins.json
   data/
   data/dacextras/
+  data/dacextras/custom_classes/
+  data/dacextras/custom_classes/custom_main.json
   data/dacextras/forge/
   data/dacextras/forge/biome_modifier/
   data/dacextras/forge/biome_modifier/fractured_vex_spawn.json/
