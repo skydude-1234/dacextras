@@ -1,35 +1,13 @@
 package com.skydude.dacextras;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
 import com.mojang.logging.LogUtils;
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.Lifecycle;
-import net.minecraft.client.Minecraft;
-import net.minecraft.core.Holder;
-import net.minecraft.core.HolderSet;
-import net.minecraft.core.Registry;
-import net.minecraft.core.WritableRegistry;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.world.BiomeModifier;
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
-import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -39,20 +17,14 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Mixins;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-
-import static com.skydude.dacextras.ModBiomeModifiers.BIOME_MODIFIER_SERIALIZERS;
-import static net.minecraft.util.datafix.fixes.BlockEntitySignTextStrictJsonFix.GSON;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(dacextras.MODID)
@@ -66,8 +38,13 @@ public class dacextras {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
     // Create a Deferred Register to hold Items which will all be registered under the "dacextras" namespace
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
+    public static int NUMBER = 0;
     public static final List<String> CLASS_IDS = new ArrayList<>();
     private static final Gson GSON = new Gson();
+    public static final Path jsonPath = FMLPaths.CONFIGDIR.get()
+            .resolve("dacextras_custom_classes")
+            .resolve("custom_main.json");
+
 
     public dacextras() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -75,39 +52,59 @@ public class dacextras {
 
         Mixins.addConfigurations("dacextras.mixins.json");
 //        // Register the commonSetup method for modloading
+        OverrideModmenus.MENUS.register(modEventBus); //
         modEventBus.addListener(this::commonSetup);
+        modEventBus.addListener(this::clientSetup);
         ModBiomeModifiers.register(modEventBus);
 
+        // OverrideModmenus.CUSTOM_CLASS_GUI.getId(); // force class load
+
+
         // Register ourselves for server and other game events we are interested in
-        MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.register(modEventBus);
 
 
     }
+
+
+    public static boolean doesitexist() {
+        boolean exists = Files.exists(jsonPath);
+        if (!exists) {
+            LOGGER.warn("⚠ JSON custom class config not found at {}. No custom classes will be loaded.", jsonPath);
+        }
+        return exists;
+    }
+
 
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
             System.out.println("[dacextras] commonSetup complete.");
         });
-        Path jsonPath = FMLPaths.CONFIGDIR.get()
-                .resolve("dacextras_custom_classes")
-                .resolve("custom_main.json");
 
-        if (!Files.exists(jsonPath)) {
-            LOGGER.warn("⚠ JSON custom class config not found at {}. No custom classes will be loaded.", jsonPath);
+
+        if (!doesitexist()) {
             return;
         } else {
 
             try {
                 String jsonContent = Files.readString(jsonPath);
-                JsonObject config = GSON.fromJson(jsonContent, JsonObject.class);
+                JsonObject jconfig = GSON.fromJson(jsonContent, JsonObject.class);
 
-                if (config != null && config.has("custom_classes") && config.get("custom_classes").isJsonArray()) {
-                    config.getAsJsonArray("custom_classes").forEach(e -> {
-                        String id = e.getAsString();
-                        CLASS_IDS.add(id);
-                        LOGGER.info("📦 Loaded custom class ID from JSON: {}", id);
+                if (jconfig != null && jconfig.has("custom_classes") && jconfig.get("custom_classes").isJsonArray()) {
+                    CLASS_IDS.clear(); // prevent duplicates
+                    jconfig.getAsJsonArray("custom_classes").forEach(e -> {
+                        String class_id = e.getAsString();
+                        CLASS_IDS.add(class_id);
+                        LOGGER.info("📦 Loaded custom class ID from JSON: {}", class_id);
                     });
+
+                    // Ensure server config is applied globally
+                    for (String class_id : dacextras.CLASS_IDS) {
+                        CustomClasses custom = new CustomClasses(class_id);
+                        CustomClassesRegistry.register(custom);
+
+                    }
                 } else {
                     LOGGER.warn("⚠ No 'custom_classes' array found in {}", jsonPath);
                 }
@@ -117,5 +114,14 @@ public class dacextras {
         }
     }
 
+    private void clientSetup(final FMLClientSetupEvent event) {
+        event.enqueueWork(() -> {
+            MenuScreens.register(OverrideModmenus.CUSTOM_CLASS_GUI.get(), CustomClassGUIScreen::new);
 
+            LOGGER.info("[dacextras] Registered CustomClassGUIScreen for {}",
+                    OverrideModmenus.CUSTOM_CLASS_GUI.getId());
+        });
+    }
 }
+    // to apply:
+
