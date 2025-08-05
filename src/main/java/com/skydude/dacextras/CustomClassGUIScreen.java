@@ -3,8 +3,12 @@ package com.skydude.dacextras;
 
 
 import com.mojang.blaze3d.systems.RenderSystem;
+
+import java.io.IOException;
 import java.util.HashMap;
+
 import net.mcreator.dungeonsandcombat.DungeonsAndCombatMod;
+import net.mcreator.dungeonsandcombat.network.RogueClassGUIButtonMessage;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.PlainTextButton;
@@ -25,6 +29,7 @@ public class CustomClassGUIScreen extends AbstractContainerScreen<CustomClassGui
     Button button_empty;
     Button button_empty1;
     Button button_choose;
+    public String class_id;
 
     public CustomClassGUIScreen(CustomClassGuiMenu container, Inventory inventory, Component text) {
         super(container, inventory, text);
@@ -36,8 +41,7 @@ public class CustomClassGUIScreen extends AbstractContainerScreen<CustomClassGui
         this.imageWidth = 176;
         this.imageHeight = 166;
 
-        String classId = container.getClassId();
-        System.out.println("✅ Screen opened for classId: " + menu.getClassId());
+
 
 
     }
@@ -75,7 +79,7 @@ public class CustomClassGUIScreen extends AbstractContainerScreen<CustomClassGui
     }
 
     protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
-        guiGraphics.drawString(this.font, Component.translatable("gui.dungeons_and_combat.bounty_hunter_class_gui.label_forgotten_knight"), -81, 3, -3355444, false);
+        guiGraphics.drawString(this.font, Component.translatable(dacextras.TEMPCLASS_ID), -81, 3, -3355444, false);
         guiGraphics.drawString(this.font, Component.translatable("gui.dungeons_and_combat.bounty_hunter_class_gui.label_health"), -80, 25, -3355444, false);
         guiGraphics.drawString(this.font, Component.translatable("gui.dungeons_and_combat.bounty_hunter_class_gui.label_strength"), -81, 41, -3355444, false);
         guiGraphics.drawString(this.font, Component.translatable("gui.dungeons_and_combat.bounty_hunter_class_gui.label_speed"), -81, 58, -3355444, false);
@@ -84,12 +88,16 @@ public class CustomClassGUIScreen extends AbstractContainerScreen<CustomClassGui
         guiGraphics.drawString(this.font, Component.translatable("gui.dungeons_and_combat.bounty_hunter_class_gui.label_toughness"), -81, 109, -3355444, false);
         guiGraphics.drawString(this.font, Component.translatable("gui.dungeons_and_combat.bounty_hunter_class_gui.label_looting"), -81, 126, -3355444, false);
         guiGraphics.drawString(this.font, Component.translatable("gui.dungeons_and_combat.bounty_hunter_class_gui.label_passive"), 110, 95, -3355444, false);
-        guiGraphics.drawString(this.font, Component.translatable("gui.dungeons_and_combat.bounty_hunter_class_gui.label_20"), -19, 24, -3355444, false);
-        guiGraphics.drawString(this.font, Component.translatable("gui.dungeons_and_combat.bounty_hunter_class_gui.label_14"), -24, 41, -3355444, false);
-        guiGraphics.drawString(this.font, Component.translatable("gui.dungeons_and_combat.bounty_hunter_class_gui.label_1"), -14, 58, -3355444, false);
-        guiGraphics.drawString(this.font, Component.translatable("gui.dungeons_and_combat.bounty_hunter_class_gui.label_395"), -30, 75, -3355444, false);
-        guiGraphics.drawString(this.font, Component.translatable("gui.dungeons_and_combat.bounty_hunter_class_gui.label_2"), -14, 92, -3355444, false);
-        guiGraphics.drawString(this.font, Component.translatable("gui.dungeons_and_combat.bounty_hunter_class_gui.label_0"), -14, 109, -3355444, false);
+        try {
+            guiGraphics.drawString(this.font, Component.translatable(String.valueOf((CustomClasses.getmaxhealth(dacextras.TEMPCLASS_ID)))), -19, 24, -3355444, false);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        guiGraphics.drawString(this.font, Component.translatable(String.valueOf(CustomClasses.getstrength(dacextras.TEMPCLASS_ID))), -24, 41, -3355444, false);
+        guiGraphics.drawString(this.font, Component.translatable(String.valueOf(CustomClasses.getspeed(dacextras.TEMPCLASS_ID))), -14, 58, -3355444, false);
+        guiGraphics.drawString(this.font, Component.translatable(String.valueOf(CustomClasses.getswing(dacextras.TEMPCLASS_ID))), -30, 75, -3355444, false);
+        guiGraphics.drawString(this.font, Component.translatable(String.valueOf(CustomClasses.getarmor(dacextras.TEMPCLASS_ID))), -14, 92, -3355444, false);
+        guiGraphics.drawString(this.font, Component.translatable(String.valueOf(CustomClasses.gettougness(dacextras.TEMPCLASS_ID))), -14, 109, -3355444, false);
         guiGraphics.drawString(this.font, Component.translatable("gui.dungeons_and_combat.bounty_hunter_class_gui.label_01"), -14, 126, -3355444, false);
         guiGraphics.drawString(this.font, Component.translatable("gui.dungeons_and_combat.bounty_hunter_class_gui.label_wield"), 116, 3, -3355444, false);
         guiGraphics.drawString(this.font, Component.translatable("gui.dungeons_and_combat.bounty_hunter_class_gui.label_heavy"), 95, 23, -3355444, false);
@@ -103,20 +111,20 @@ public class CustomClassGUIScreen extends AbstractContainerScreen<CustomClassGui
     public void init() {
         super.init();
         this.button_empty = new PlainTextButton(this.leftPos + 184, this.topPos + 76, 30, 20, Component.translatable("gui.dungeons_and_combat.bounty_hunter_class_gui.button_empty"), (e) -> {
-            DungeonsAndCombatMod.PACKET_HANDLER.sendToServer(new CustomClassButtonMessage(0, this.x, this.y, this.z));
-            CustomClassButtonMessage.handleButtonAction(this.entity, 0, this.x, this.y, this.z);
+            DungeonsAndCombatMod.PACKET_HANDLER.sendToServer(new RogueClassGUIButtonMessage(0, this.x, this.y, this.z));
+            RogueClassGUIButtonMessage.handleButtonAction(this.entity, 0, this.x, this.y, this.z);
         }, this.font);
         guistate.put("button:button_empty", this.button_empty);
         this.addRenderableWidget(this.button_empty);
         this.button_empty1 = new PlainTextButton(this.leftPos + -112, this.topPos + 77, 30, 20, Component.translatable("gui.dungeons_and_combat.bounty_hunter_class_gui.button_empty1"), (e) -> {
-            DungeonsAndCombatMod.PACKET_HANDLER.sendToServer(new CustomClassButtonMessage(1, this.x, this.y, this.z));
-            CustomClassButtonMessage.handleButtonAction(this.entity, 1, this.x, this.y, this.z);
+            DungeonsAndCombatMod.PACKET_HANDLER.sendToServer(new RogueClassGUIButtonMessage(1, this.x, this.y, this.z));
+            RogueClassGUIButtonMessage.handleButtonAction(this.entity, 1, this.x, this.y, this.z);
         }, this.font);
         guistate.put("button:button_empty1", this.button_empty1);
         this.addRenderableWidget(this.button_empty1);
         this.button_choose = new PlainTextButton(this.leftPos + -44, this.topPos + 172, 56, 20, Component.translatable("gui.dungeons_and_combat.bounty_hunter_class_gui.button_choose"), (e) -> {
-            DungeonsAndCombatMod.PACKET_HANDLER.sendToServer(new CustomClassButtonMessage(2, this.x, this.y, this.z));
-            CustomClassButtonMessage.handleButtonAction(this.entity, 2, this.x, this.y, this.z);
+            DungeonsAndCombatMod.PACKET_HANDLER.sendToServer(new RogueClassGUIButtonMessage(2, this.x, this.y, this.z));
+            RogueClassGUIButtonMessage.handleButtonAction(this.entity, 2, this.x, this.y, this.z);
         }, this.font);
         guistate.put("button:button_choose", this.button_choose);
         this.addRenderableWidget(this.button_choose);

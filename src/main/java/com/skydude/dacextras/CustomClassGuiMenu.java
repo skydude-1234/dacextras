@@ -60,10 +60,10 @@ public class CustomClassGuiMenu extends AbstractContainerMenu implements Supplie
             this.y = pos.getY();
             this.z = pos.getZ();
             this.classId = extraData.readUtf();
-            System.out.println(" classId = extraData.readUtf(); is" + classId);
+
             this.access = ContainerLevelAccess.create(this.world, pos);
-        } else { System.out.println(" -3 extradata might be null");}
-         System.out.println("  3 CustomClassGui worked??");
+        }
+
     }
     public String getClassId() {
         return classId;

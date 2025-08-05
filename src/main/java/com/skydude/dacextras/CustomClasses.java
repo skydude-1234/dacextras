@@ -1,6 +1,7 @@
 package com.skydude.dacextras;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import net.mcreator.dungeonsandcombat.init.DungeonsAndCombatModItems;
@@ -32,7 +33,7 @@ public class CustomClasses {
     private static final Gson GSON = new Gson();
 
     private final String class_id;
-    private static JsonObject classConfig; // holds this class's custom data
+    public static JsonObject classConfig; // holds this class's custom data
 
 
 
@@ -41,7 +42,6 @@ public class CustomClasses {
 
     public CustomClasses( String class_id) {
         this.class_id = class_id;
-        loadClassConfig();
 
         //  this.player = player;
 
@@ -49,7 +49,7 @@ public class CustomClasses {
      //   loadClassConfig();
         var the_id = class_id;
     }
-public static void execute(String class_id, Entity entity){
+public static void execute(String class_id, Entity entity) throws IOException {
     if (!(entity instanceof Player player)) {
         System.out.println("entity is not instanceof Player player");
         return;
@@ -80,7 +80,7 @@ public static void execute(String class_id, Entity entity){
         }
     }
 
-    Objects.requireNonNull(player.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(getmaxhealth());
+    Objects.requireNonNull(player.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(getmaxhealth(class_id));
     // set the health to amx health so no glitches happen
     player.setHealth(player.getMaxHealth());
 
@@ -119,43 +119,67 @@ public static void execute(String class_id, Entity entity){
 
 }
 
-    private void loadClassConfig() {
+//    private void loadClassConfig() {
+//        Path jsonPath = FMLPaths.CONFIGDIR.get()
+//                .resolve("dacextras_custom_classes")
+//                .resolve(class_id + ".json"); // filename matches class_id
+//
+//        if (!Files.exists(jsonPath)) {
+//            LOGGER.warn("⚠ No config found for custom class '{}'. Expected: {}", class_id, jsonPath);
+//            return;
+//        }
+//
+//        try {
+//            String jsonContent = Files.readString(jsonPath);
+//            classConfig = GSON.fromJson(jsonContent, JsonObject.class);
+//
+//            if (classConfig == null) {
+//                LOGGER.error("❌ Failed to parse JSON for class_id '{}'", class_id);
+//                return;
+//            }
+//
+//            LOGGER.info("✅ Loaded config for class_id '{}': {}", class_id, jsonPath);
+//
+//            // Example: access custom values
+//            if (classConfig.has("max_health")) {
+//                int maxhealth = classConfig.get("max_health").getAsInt();
+//             //   LOGGER.info("Power level for {} = {}", class_id, maxhealth);
+//            }
+//
+//        } catch (IOException | JsonSyntaxException e) {
+//            LOGGER.error("❌ Error reading config for '{}': {}", class_id, e.getMessage());
+//        }
+//    }
+
+    public String getClassId() {
+        return class_id;
+    }
+public static JsonObject getclassconfig(String class_id) {
         Path jsonPath = FMLPaths.CONFIGDIR.get()
                 .resolve("dacextras_custom_classes")
                 .resolve(class_id + ".json"); // filename matches class_id
 
         if (!Files.exists(jsonPath)) {
             LOGGER.warn("⚠ No config found for custom class '{}'. Expected: {}", class_id, jsonPath);
-            return;
         }
 
+
+        String jsonContent = null;
         try {
-            String jsonContent = Files.readString(jsonPath);
-            classConfig = GSON.fromJson(jsonContent, JsonObject.class);
-
-            if (classConfig == null) {
-                LOGGER.error("❌ Failed to parse JSON for class_id '{}'", class_id);
-                return;
-            }
-
-            LOGGER.info("✅ Loaded config for class_id '{}': {}", class_id, jsonPath);
-
-            // Example: access custom values
-            if (classConfig.has("max_health")) {
-                int maxhealth = classConfig.get("max_health").getAsInt();
-             //   LOGGER.info("Power level for {} = {}", class_id, maxhealth);
-            }
-
-        } catch (IOException | JsonSyntaxException e) {
-            LOGGER.error("❌ Error reading config for '{}': {}", class_id, e.getMessage());
+            jsonContent = Files.readString(jsonPath);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-    }
+        classConfig = GSON.fromJson(jsonContent, JsonObject.class);
 
-    public String getClassId() {
-        return class_id;
+        if (classConfig == null) {
+            LOGGER.error("❌ Failed to parse JSON for class_id '{}'", class_id);
+        }
+        return classConfig;
     }
+public static int getmaxhealth(String class_id) throws IOException {
 
-public static int getmaxhealth() {
+    classConfig = getclassconfig(class_id);
     int maxhealth = 0;
     if (classConfig.has("max_health")) {
         maxhealth = classConfig.get("max_health").getAsInt();
@@ -164,6 +188,61 @@ public static int getmaxhealth() {
     }
     return maxhealth;
 }
+public static int getstrength(String class_id){
+
+    classConfig = getclassconfig(class_id);
+    int strength = 0;
+    if (classConfig.has("damage")) {
+        strength = classConfig.get("damage").getAsInt();
+
+        //   LOGGER.info("Power level for {} = {}", class_id, maxhealth);
+    }
+        return strength;
+}
+public static int getspeed(String class_id){
+
+        classConfig = getclassconfig(class_id);
+        int speed = 0;
+        if (classConfig.has("speed")) {
+            speed = classConfig.get("speed").getAsInt();
+
+            //   LOGGER.info("Power level for {} = {}", class_id, maxhealth);
+        }
+        return speed;
+    }
+    public static int getswing(String class_id){
+
+        classConfig = getclassconfig(class_id);
+        int swing = 0;
+        if (classConfig.has("swing")) {
+            swing = classConfig.get("swing").getAsInt();
+
+            //   LOGGER.info("Power level for {} = {}", class_id, maxhealth);
+        }
+        return swing;
+    }
+    public static int getarmor(String class_id){
+
+        classConfig = getclassconfig(class_id);
+        int armor = 0;
+        if (classConfig.has("armor")) {
+            armor = classConfig.get("armor").getAsInt();
+
+            //   LOGGER.info("Power level for {} = {}", class_id, maxhealth);
+        }
+        return armor;
+    }
+    public static int gettougness(String class_id){
+
+        classConfig = getclassconfig(class_id);
+        int toughness = 0;
+        if (classConfig.has("toughness")) {
+            toughness = classConfig.get("toughness").getAsInt();
+
+            //   LOGGER.info("Power level for {} = {}", class_id, maxhealth);
+        }
+        return toughness;
+    }
 
     public JsonObject getClassConfig() {
         return classConfig;

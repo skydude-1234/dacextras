@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.MinecraftForge;
@@ -15,6 +16,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
+import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.slf4j.Logger;
@@ -25,6 +27,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
+
+import static net.mcreator.dungeonsandcombat.DungeonsAndCombatMod.PACKET_HANDLER;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(dacextras.MODID)
@@ -38,12 +45,21 @@ public class dacextras {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
     // Create a Deferred Register to hold Items which will all be registered under the "dacextras" namespace
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
-    public static int NUMBER = 0;
+    public static double NUMBER = -1.0;
     public static final List<String> CLASS_IDS = new ArrayList<>();
+    public static String TEMPCLASS_ID = "";
     private static final Gson GSON = new Gson();
     public static final Path jsonPath = FMLPaths.CONFIGDIR.get()
             .resolve("dacextras_custom_classes")
             .resolve("custom_main.json");
+
+
+    private static int messageID = 0;
+
+    public static <T> void addNetworkMessage(Class<T> messageType, BiConsumer<T, FriendlyByteBuf> encoder, Function<FriendlyByteBuf, T> decoder, BiConsumer<T, Supplier<NetworkEvent.Context>> messageConsumer) {
+        PACKET_HANDLER.registerMessage(messageID, messageType, encoder, decoder, messageConsumer);
+        ++messageID;
+    }
 
 
     public dacextras() {

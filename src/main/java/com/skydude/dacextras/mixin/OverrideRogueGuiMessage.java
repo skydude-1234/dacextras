@@ -3,10 +3,7 @@ package com.skydude.dacextras.mixin;
 import com.google.gson.JsonObject;
 import com.skydude.dacextras.*;
 import net.mcreator.dungeonsandcombat.network.RogueClassGUIButtonMessage;
-import net.mcreator.dungeonsandcombat.procedures.ExliedNextProcedure;
-import net.mcreator.dungeonsandcombat.procedures.ForgottenKnightNextProcedure;
-import net.mcreator.dungeonsandcombat.procedures.RogueChoosedProcedure;
-import net.mcreator.dungeonsandcombat.procedures.RogueClassEverProcedure;
+import net.mcreator.dungeonsandcombat.procedures.*;
 import net.mcreator.dungeonsandcombat.world.inventory.RogueClassGUIMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
@@ -36,29 +33,81 @@ public class OverrideRogueGuiMessage {
         HashMap guistate = RogueClassGUIMenu.guistate;
         if (world.hasChunkAt(new BlockPos(x, y, z))) {
             if (buttonID == 0) {
-                dacextras.NUMBER = 0;
-                String class_id = dacextras.CLASS_IDS.get(dacextras.NUMBER);
-               // String class_id = "jim_my";
-              //  System.out.println(" the thigny mathingy is " + dacextras.CLASS_IDS.get(dacextras.NUMBER));
 
-                CustomClassesNextProcedure.execute(world, (double)x, (double)y, (double)z, entity, class_id);
+                if (dacextras.NUMBER < -1){
+                    dacextras.NUMBER = 0;
 
-                System.out.println(" 0 started executing next.");
-//                if (doesitexist()){
-//                   // ForgottenKnightNextProcedure.execute(world, (double) x, (double) y, (double) z, entity);
-//                } else{
-//
-//                    // this means we need to override the method before rogue to set dacextras.number to 0
-//                    CustomClassesNextProcedure.execute(world, (double)x, (double)y, (double)z, entity, firstId);
-//                }
+                    String class_id = dacextras.CLASS_IDS.get(0);
+                    CustomClassesNextProcedure.execute(world, (double) x, (double) y, (double) z, entity, class_id);
+
+                }
+
+
+                if (dacextras.NUMBER >= dacextras.CLASS_IDS.size()) {
+                    ForgottenKnightNextProcedure.execute(world, (double) x, (double) y, (double) z, entity);
+                    dacextras.NUMBER = -1;
+
+
+                } else{
+
+
+                    dacextras.NUMBER = dacextras.NUMBER + 0.5;
+                    if (dacextras.NUMBER <= -1){
+                        ForgottenKnightNextProcedure.execute(world, (double) x, (double) y, (double) z, entity);
+                        dacextras.NUMBER = 0;
+                        return;
+                    } else if ((dacextras.NUMBER >= dacextras.CLASS_IDS.size())) {
+                        ForgottenKnightNextProcedure.execute(world, (double) x, (double) y, (double) z, entity);
+                        dacextras.NUMBER = -1;
+                    }
+
+
+                    System.out.println(dacextras.NUMBER);
+                    String class_id = dacextras.CLASS_IDS.get((int) dacextras.NUMBER);
+                    CustomClassesNextProcedure.execute(world, (double) x, (double) y, (double) z, entity, class_id);
+
+
+
+                }
+
+
+
+
             }
 
             if (buttonID == 1) {
-                ExliedNextProcedure.execute(world, (double)x, (double)y, (double)z, entity);
+
+                if (dacextras.NUMBER <= -1) {
+                    if (dacextras.NUMBER <= -3) {
+
+                        System.out.println(dacextras.NUMBER);
+                        ExliedNextProcedure.execute(world, (double) x, (double) y, (double) z, entity);
+                        dacextras.NUMBER = -1;
+
+
+                    } else {
+
+                            dacextras.NUMBER = dacextras.NUMBER - 1;
+                            System.out.println(dacextras.NUMBER);
+                            RogueNextProcedure.execute(world, (double) x, (double) y, (double) z, entity);
+
+                    }
+
+                } else {
+                    dacextras.NUMBER = dacextras.NUMBER - 1;
+                    System.out.println(dacextras.NUMBER);
+
+                    String class_id = dacextras.CLASS_IDS.get((int) dacextras.NUMBER);
+                    System.out.println("Classid is" + class_id);
+                    CustomClassesNextProcedure.execute(world, (double) x, (double) y, (double) z, entity, class_id);
+
+
+                }
             }
 
             if (buttonID == 2) {
                 RogueChoosedProcedure.execute(entity);
+                dacextras.NUMBER = -1;
             }
 
         }
