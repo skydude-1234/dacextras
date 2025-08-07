@@ -2,6 +2,7 @@ package com.skydude.dacextras.mixin;
 
 import com.mojang.logging.LogUtils;
 import com.skydude.dacextras.Config;
+import com.skydude.dacextras.dacextras;
 import net.mcreator.dungeonsandcombat.init.DungeonsAndCombatModItems;
 import net.mcreator.dungeonsandcombat.procedures.RogueChoosedProcedure;
 import net.minecraft.advancements.Advancement;
@@ -62,16 +63,24 @@ public abstract class OverrideRogue {
               }
           }
 
-          Objects.requireNonNull(player.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(Config.ROGUE_MAX_HEALTH.get());
+          dacextras.hhealth = Config.ROGUE_MAX_HEALTH.get();
+          dacextras.lluck = Config.ROGUE_LUCK.get();
+          dacextras.sstrength = Config.ROGUE_DAMAGE.get();
+          dacextras.sspeed = Config.ROGUE_SPEED.get();
+          dacextras.aattack_speed = Config.ROGUE_ATTACK_SPEED.get();
+          dacextras.aarmor = Config.ROGUE_ARMOR.get();
+          dacextras.ttoughness = 0;
+          LivingEntity living = ((LivingEntity) entity);
+          Objects.requireNonNull(living.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(Config.ROGUE_MAX_HEALTH.get());
           // set the health to amx health so no glitches happen
-          player.setHealth(player.getMaxHealth());
+          living.setHealth(living.getMaxHealth());
 
-          Objects.requireNonNull(player.getAttribute(Attributes.LUCK)).setBaseValue(Config.ROGUE_LUCK.get());
-          Objects.requireNonNull(player.getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue(Config.ROGUE_DAMAGE.get());
-          Objects.requireNonNull(player.getAttribute(Attributes.MOVEMENT_SPEED)).setBaseValue(Config.ROGUE_SPEED.get());
-          Objects.requireNonNull(player.getAttribute(Attributes.ATTACK_SPEED)).setBaseValue(Config.ROGUE_ATTACK_SPEED.get());
-          Objects.requireNonNull(player.getAttribute(Attributes.ARMOR_TOUGHNESS)).setBaseValue(0);
-          Objects.requireNonNull(player.getAttribute(Attributes.ARMOR)).setBaseValue(Config.ROGUE_ARMOR.get());
+          Objects.requireNonNull(living.getAttribute(Attributes.LUCK)).setBaseValue(Config.ROGUE_LUCK.get());
+          Objects.requireNonNull(living.getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue(Config.ROGUE_DAMAGE.get());
+          Objects.requireNonNull(living.getAttribute(Attributes.MOVEMENT_SPEED)).setBaseValue(Config.ROGUE_SPEED.get());
+          Objects.requireNonNull(living.getAttribute(Attributes.ATTACK_SPEED)).setBaseValue(Config.ROGUE_ATTACK_SPEED.get());
+          Objects.requireNonNull(living.getAttribute(Attributes.ARMOR_TOUGHNESS)).setBaseValue(0);
+          Objects.requireNonNull(living.getAttribute(Attributes.ARMOR)).setBaseValue(Config.ROGUE_ARMOR.get());
 
 
           if(player.getItemBySlot(EquipmentSlot.HEAD).isEmpty()) {

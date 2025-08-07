@@ -15,6 +15,7 @@ import net.minecraft.client.gui.components.PlainTextButton;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -53,10 +54,8 @@ public class CustomClassGUIScreen extends AbstractContainerScreen<CustomClassGui
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         this.renderBackground(guiGraphics);
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
-     //   Entity var6 = BountyHunterClassViewProcedure.execute(this.world, (double)this.x, (double)this.y, (double)this.z, this.entity);
-//        if (var6 instanceof LivingEntity livingEntity) {
-//            InventoryScreen.renderEntityInInventoryFollowsAngle(guiGraphics, this.leftPos + 30, this.topPos + 111, 42, 0.0F + (float)Math.atan((double)(this.leftPos + 30 - mouseX) / (double)40.0F), (float)Math.atan((double)(this.topPos + 62 - mouseY) / (double)40.0F), livingEntity);
-//        }
+       // CustomClasses.execute(dacextras.TEMPCLASS_ID, this.entity);
+
 
         this.renderTooltip(guiGraphics, mouseX, mouseY);
     }
@@ -88,24 +87,20 @@ public class CustomClassGUIScreen extends AbstractContainerScreen<CustomClassGui
         guiGraphics.drawString(this.font, Component.translatable("gui.dungeons_and_combat.bounty_hunter_class_gui.label_toughness"), -81, 109, -3355444, false);
         guiGraphics.drawString(this.font, Component.translatable("gui.dungeons_and_combat.bounty_hunter_class_gui.label_looting"), -81, 126, -3355444, false);
         guiGraphics.drawString(this.font, Component.translatable("gui.dungeons_and_combat.bounty_hunter_class_gui.label_passive"), 110, 95, -3355444, false);
-        try {
-            guiGraphics.drawString(this.font, Component.translatable(String.valueOf((CustomClasses.getmaxhealth(dacextras.TEMPCLASS_ID)))), -19, 24, -3355444, false);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        guiGraphics.drawString(this.font, Component.translatable(String.valueOf((CustomClasses.getmaxhealth(dacextras.TEMPCLASS_ID)))), -19, 24, -3355444, false);
         guiGraphics.drawString(this.font, Component.translatable(String.valueOf(CustomClasses.getstrength(dacextras.TEMPCLASS_ID))), -24, 41, -3355444, false);
         guiGraphics.drawString(this.font, Component.translatable(String.valueOf(CustomClasses.getspeed(dacextras.TEMPCLASS_ID))), -14, 58, -3355444, false);
         guiGraphics.drawString(this.font, Component.translatable(String.valueOf(CustomClasses.getswing(dacextras.TEMPCLASS_ID))), -30, 75, -3355444, false);
         guiGraphics.drawString(this.font, Component.translatable(String.valueOf(CustomClasses.getarmor(dacextras.TEMPCLASS_ID))), -14, 92, -3355444, false);
         guiGraphics.drawString(this.font, Component.translatable(String.valueOf(CustomClasses.gettougness(dacextras.TEMPCLASS_ID))), -14, 109, -3355444, false);
-        guiGraphics.drawString(this.font, Component.translatable("gui.dungeons_and_combat.bounty_hunter_class_gui.label_01"), -14, 126, -3355444, false);
+        guiGraphics.drawString(this.font, Component.translatable(String.valueOf(CustomClasses.getluck(dacextras.TEMPCLASS_ID))), -14, 126, -3355444, false);
         guiGraphics.drawString(this.font, Component.translatable("gui.dungeons_and_combat.bounty_hunter_class_gui.label_wield"), 116, 3, -3355444, false);
         guiGraphics.drawString(this.font, Component.translatable("gui.dungeons_and_combat.bounty_hunter_class_gui.label_heavy"), 95, 23, -3355444, false);
-        guiGraphics.drawString(this.font, Component.translatable("gui.dungeons_and_combat.bounty_hunter_class_gui.label_none"), 84, 115, -3355444, false);
+        guiGraphics.drawString(this.font, Component.literal(CustomClasses.getdesc1(dacextras.TEMPCLASS_ID)), 84, 115, -3355444, false);
         guiGraphics.drawString(this.font, Component.translatable("gui.dungeons_and_combat.bounty_hunter_class_gui.label_light"), 95, 51, -3355444, false);
         guiGraphics.drawString(this.font, Component.translatable("gui.dungeons_and_combat.bounty_hunter_class_gui.label_medium"), 95, 37, -3355444, false);
-        guiGraphics.drawString(this.font, Component.translatable("gui.dungeons_and_combat.bounty_hunter_class_gui.label_you_will_get_strength_ii"), 84, 129, -3355444, false);
-        guiGraphics.drawString(this.font, Component.translatable("gui.dungeons_and_combat.bounty_hunter_class_gui.label_strength_ii"), 84, 143, -3355444, false);
+        guiGraphics.drawString(this.font, Component.literal(CustomClasses.getdesc2(dacextras.TEMPCLASS_ID)), 84, 129, -3355444, false);
+        guiGraphics.drawString(this.font, Component.translatable(CustomClasses.getdesc3(dacextras.TEMPCLASS_ID)), 84, 143, -3355444, false);
     }
 
     public void init() {

@@ -2,6 +2,7 @@ package com.skydude.dacextras.mixin;
 
 import com.mojang.logging.LogUtils;
 import com.skydude.dacextras.Config;
+import com.skydude.dacextras.dacextras;
 import net.mcreator.dungeonsandcombat.init.DungeonsAndCombatModItems;
 import net.mcreator.dungeonsandcombat.procedures.ForgottenKnightChoosedProcedure;
 import net.mcreator.dungeonsandcombat.procedures.RogueChoosedProcedure;
@@ -62,17 +63,27 @@ public abstract class OverrideForgottenKnight {
                 }
             }
         }
-
-        Objects.requireNonNull(player.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(Config.FORGOTTEN_MAX_HEALTH.get());
+        LivingEntity living = ((LivingEntity) entity);
+        Objects.requireNonNull(living.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(Config.FORGOTTEN_MAX_HEALTH.get());
         // set the health to amx health so no glitches happen
-        player.setHealth(player.getMaxHealth());
+        living.setHealth(living.getMaxHealth());
 
-        Objects.requireNonNull(player.getAttribute(Attributes.LUCK)).setBaseValue(Config.FORGOTTEN_LUCK.get());
-        Objects.requireNonNull(player.getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue(Config.FORGOTTEN_DAMAGE.get());
-        Objects.requireNonNull(player.getAttribute(Attributes.MOVEMENT_SPEED)).setBaseValue(Config.FORGOTTEN_SPEED.get());
-        Objects.requireNonNull(player.getAttribute(Attributes.ATTACK_SPEED)).setBaseValue(Config.FORGOTTEN_ATTACK_SPEED.get());
-        Objects.requireNonNull(player.getAttribute(Attributes.ARMOR)).setBaseValue(Config.FORGOTTEN_ARMOR.get());
-        Objects.requireNonNull(player.getAttribute(Attributes.ARMOR_TOUGHNESS)).setBaseValue(0);
+        dacextras.hhealth = Config.FORGOTTEN_MAX_HEALTH.get();
+        dacextras.lluck = Config.FORGOTTEN_LUCK.get();
+        dacextras.sstrength = Config.FORGOTTEN_DAMAGE.get();
+        dacextras.sspeed = Config.FORGOTTEN_SPEED.get();
+        dacextras.aattack_speed = Config.FORGOTTEN_ATTACK_SPEED.get();
+        dacextras.aarmor = Config.FORGOTTEN_ARMOR.get();
+        dacextras.ttoughness = 0;
+
+
+        Objects.requireNonNull(living.getAttribute(Attributes.ATTACK_SPEED)).setBaseValue(Config.FORGOTTEN_ATTACK_SPEED.get());
+        Objects.requireNonNull(living.getAttribute(Attributes.LUCK)).setBaseValue(Config.FORGOTTEN_LUCK.get());
+        Objects.requireNonNull(living.getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue(Config.FORGOTTEN_DAMAGE.get());
+        Objects.requireNonNull(living.getAttribute(Attributes.MOVEMENT_SPEED)).setBaseValue(Config.FORGOTTEN_SPEED.get());
+        Objects.requireNonNull(living.getAttribute(Attributes.ATTACK_SPEED)).setBaseValue(Config.FORGOTTEN_ATTACK_SPEED.get());
+        Objects.requireNonNull(living.getAttribute(Attributes.ARMOR)).setBaseValue(Config.FORGOTTEN_ARMOR.get());
+        Objects.requireNonNull(living.getAttribute(Attributes.ARMOR_TOUGHNESS)).setBaseValue(0);
 
 
         if(player.getItemBySlot(EquipmentSlot.HEAD).isEmpty()) {

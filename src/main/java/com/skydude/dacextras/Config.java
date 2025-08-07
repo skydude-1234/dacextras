@@ -313,7 +313,7 @@ public class Config {
         builder.push("  TITAN CONFIG");
         TITAN_MAX_HEALTH = builder
                 .comment("Max Health for Titan")
-                .defineInRange("EXILED_health", 28.0F, 1.0F, 1000.0F);
+                .defineInRange("TITAN_health", 28.0F, 1.0F, 1000.0F);
 
         TITAN_LUCK = builder
                 .comment("Luck for Titan")

@@ -2,6 +2,7 @@ package com.skydude.dacextras.mixin;
 
 import com.mojang.logging.LogUtils;
 import com.skydude.dacextras.Config;
+import com.skydude.dacextras.dacextras;
 import net.mcreator.dungeonsandcombat.init.DungeonsAndCombatModItems;
 import net.mcreator.dungeonsandcombat.procedures.RogueChoosedProcedure;
 import net.mcreator.dungeonsandcombat.procedures.VagabondChoosedProcedure;
@@ -62,15 +63,24 @@ public abstract class OverrideVagabond {
                 }
             }
         }
-
-        Objects.requireNonNull(player.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(Config.VAGABOND_MAX_HEALTH.get());
+        dacextras.hhealth = Config.TITAN_MAX_HEALTH.get();
+        dacextras.lluck = Config.TITAN_LUCK.get();
+        dacextras.sstrength = Config.TITAN_DAMAGE.get();
+        dacextras.sspeed = Config.TITAN_SPEED.get();
+        dacextras.aattack_speed = Config.TITAN_ATTACK_SPEED.get();
+        dacextras.aarmor = Config.TITAN_ARMOR.get();
+        dacextras.ttoughness = 0;
+        LivingEntity living = ((LivingEntity) entity);
+        Objects.requireNonNull(living.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(Config.VAGABOND_MAX_HEALTH.get());
         // set the health to amx health so no glitches happen
-        player.setHealth(player.getMaxHealth());
+        living.setHealth(living.getMaxHealth());
 
-        Objects.requireNonNull(player.getAttribute(Attributes.LUCK)).setBaseValue(Config.VAGABOND_LUCK.get());
-        Objects.requireNonNull(player.getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue(Config.VAGABOND_DAMAGE.get());
-        Objects.requireNonNull(player.getAttribute(Attributes.MOVEMENT_SPEED)).setBaseValue(Config.VAGABOND_SPEED.get());
-        Objects.requireNonNull(player.getAttribute(Attributes.ATTACK_SPEED)).setBaseValue(Config.VAGABOND_ATTACK_SPEED.get());
+        Objects.requireNonNull(living.getAttribute(Attributes.LUCK)).setBaseValue(Config.VAGABOND_LUCK.get());
+        Objects.requireNonNull(living.getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue(Config.VAGABOND_DAMAGE.get());
+        Objects.requireNonNull(living.getAttribute(Attributes.MOVEMENT_SPEED)).setBaseValue(Config.VAGABOND_SPEED.get());
+        Objects.requireNonNull(living.getAttribute(Attributes.ARMOR)).setBaseValue(Config.VAGABOND_ARMOR.get());
+        Objects.requireNonNull(living.getAttribute(Attributes.ARMOR_TOUGHNESS)).setBaseValue(0);
+        Objects.requireNonNull(living.getAttribute(Attributes.ATTACK_SPEED)).setBaseValue(Config.VAGABOND_ATTACK_SPEED.get());
 
 
         if(player.getItemBySlot(EquipmentSlot.HEAD).isEmpty()) {

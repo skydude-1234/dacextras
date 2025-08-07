@@ -1,21 +1,16 @@
 package com.skydude.dacextras;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
-import net.mcreator.dungeonsandcombat.init.DungeonsAndCombatModItems;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
@@ -25,6 +20,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Objects;
+
+import static com.skydude.dacextras.dacextras.*;
 
 public class CustomClasses {
 
@@ -49,7 +46,20 @@ public class CustomClasses {
      //   loadClassConfig();
         var the_id = class_id;
     }
-public static void execute(String class_id, Entity entity) throws IOException {
+    public static void class_attributes(double health, double armor, double toughness, double strength, double speed, double attack_speed, double luck, Player player){
+        Objects.requireNonNull(player.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(health);
+        // set the health to amx health so no glitches happen
+        player.setHealth(player.getMaxHealth());
+
+        Objects.requireNonNull(player.getAttribute(Attributes.LUCK)).setBaseValue(luck);
+        Objects.requireNonNull(player.getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue(strength);
+        Objects.requireNonNull(player.getAttribute(Attributes.MOVEMENT_SPEED)).setBaseValue(speed);
+        Objects.requireNonNull(player.getAttribute(Attributes.ATTACK_SPEED)).setBaseValue(attack_speed);
+        Objects.requireNonNull(player.getAttribute(Attributes.ARMOR_TOUGHNESS)).setBaseValue(toughness);
+        Objects.requireNonNull(player.getAttribute(Attributes.ARMOR)).setBaseValue(armor);
+
+    }
+public static void execute(String class_id, Entity entity) {
     if (!(entity instanceof Player player)) {
         System.out.println("entity is not instanceof Player player");
         return;
@@ -69,7 +79,7 @@ public static void execute(String class_id, Entity entity) throws IOException {
     }
     if (entity instanceof ServerPlayer serverPlayer) {
 
-        Advancement _adv = serverPlayer.server.getAdvancements().getAdvancement(new ResourceLocation("dungeons_and_combat:the_rogue"));
+        Advancement _adv = serverPlayer.server.getAdvancements().getAdvancement(new ResourceLocation("dacextras:the_custom"));
         assert _adv != null;
 
         AdvancementProgress _ap = serverPlayer.getAdvancements().getOrStartProgress(_adv);
@@ -80,42 +90,44 @@ public static void execute(String class_id, Entity entity) throws IOException {
         }
     }
 
-    Objects.requireNonNull(player.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(getmaxhealth(class_id));
-    // set the health to amx health so no glitches happen
-    player.setHealth(player.getMaxHealth());
-
-    Objects.requireNonNull(player.getAttribute(Attributes.LUCK)).setBaseValue(Config.ROGUE_LUCK.get());
-    Objects.requireNonNull(player.getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue(Config.ROGUE_DAMAGE.get());
-    Objects.requireNonNull(player.getAttribute(Attributes.MOVEMENT_SPEED)).setBaseValue(Config.ROGUE_SPEED.get());
-    Objects.requireNonNull(player.getAttribute(Attributes.ATTACK_SPEED)).setBaseValue(Config.ROGUE_ATTACK_SPEED.get());
-    Objects.requireNonNull(player.getAttribute(Attributes.ARMOR_TOUGHNESS)).setBaseValue(0);
-    Objects.requireNonNull(player.getAttribute(Attributes.ARMOR)).setBaseValue(Config.ROGUE_ARMOR.get());
+    hhealth = getmaxhealth(class_id);
+    lluck = getluck(class_id);
+    sstrength = getstrength(class_id);
+    sspeed = getspeed(class_id);
+    aattack_speed = getswing(class_id);
+    ttoughness = gettougness(class_id);
+    aarmor = getarmor(class_id);
+    class_attributes(hhealth, aarmor, ttoughness, sstrength, sspeed, aattack_speed, lluck, player);
 
 
-    if(player.getItemBySlot(EquipmentSlot.HEAD).isEmpty()) {
-        player.setItemSlot(EquipmentSlot.HEAD, new ItemStack(Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Config.ROGUE_HELMET.get())))));
-    }
-
-    if(player.getItemBySlot(EquipmentSlot.CHEST).isEmpty()) {
-        player.setItemSlot(EquipmentSlot.CHEST, new ItemStack(Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Config.ROGUE_CHESTPLATE.get())))));
-    }
 
 
-    if(player.getItemBySlot(EquipmentSlot.LEGS).isEmpty()) {
-        player.setItemSlot(EquipmentSlot.LEGS, new ItemStack(Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Config.ROGUE_LEGGINGS.get())))));
-    }
 
-    if(player.getItemBySlot(EquipmentSlot.FEET).isEmpty()) {
-        player.setItemSlot(EquipmentSlot.FEET, new ItemStack(Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Config.ROGUE_BOOTS.get())))));
-    }
+        player.setItemSlot(EquipmentSlot.HEAD, new ItemStack(Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(gethelm(class_id))))));
 
-    if(player.getItemBySlot(EquipmentSlot.MAINHAND).isEmpty()){
 
-        player.setItemInHand(InteractionHand.MAIN_HAND, (new ItemStack((ItemLike) DungeonsAndCombatModItems.DAGGER.get())).copy());
-    }
-    if(player.getItemBySlot(EquipmentSlot.OFFHAND).isEmpty()) {
-        player.setItemInHand(InteractionHand.OFF_HAND, (new ItemStack((ItemLike) DungeonsAndCombatModItems.DAGGER.get())).copy());
-    }
+
+        player.setItemSlot(EquipmentSlot.CHEST, new ItemStack(Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(getchest(class_id))))));
+
+
+
+
+        player.setItemSlot(EquipmentSlot.LEGS, new ItemStack(Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(getlegs(class_id))))));
+
+
+
+        player.setItemSlot(EquipmentSlot.FEET, new ItemStack(Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(getboot(class_id))))));
+
+
+
+
+        player.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(getmain(class_id))))));
+
+
+
+        player.setItemSlot(EquipmentSlot.OFFHAND, new ItemStack(Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(getoffhand(class_id))))));
+
+
 
 }
 
@@ -177,71 +189,183 @@ public static JsonObject getclassconfig(String class_id) {
         }
         return classConfig;
     }
-public static int getmaxhealth(String class_id) throws IOException {
+public static double getmaxhealth(String class_id) {
 
     classConfig = getclassconfig(class_id);
-    int maxhealth = 0;
+    double maxhealth = 0;
     if (classConfig.has("max_health")) {
-        maxhealth = classConfig.get("max_health").getAsInt();
+        maxhealth = classConfig.get("max_health").getAsDouble();
 
         //   LOGGER.info("Power level for {} = {}", class_id, maxhealth);
     }
     return maxhealth;
 }
-public static int getstrength(String class_id){
+public static double getstrength(String class_id){
 
     classConfig = getclassconfig(class_id);
-    int strength = 0;
+    double strength = 0;
     if (classConfig.has("damage")) {
-        strength = classConfig.get("damage").getAsInt();
+        strength = classConfig.get("damage").getAsDouble();
 
         //   LOGGER.info("Power level for {} = {}", class_id, maxhealth);
     }
         return strength;
 }
-public static int getspeed(String class_id){
+public static double getspeed(String class_id){
 
         classConfig = getclassconfig(class_id);
-        int speed = 0;
+    double speed = 0;
         if (classConfig.has("speed")) {
-            speed = classConfig.get("speed").getAsInt();
+            speed = classConfig.get("speed").getAsDouble();
 
             //   LOGGER.info("Power level for {} = {}", class_id, maxhealth);
         }
         return speed;
     }
-    public static int getswing(String class_id){
+    public static double getswing(String class_id){
 
         classConfig = getclassconfig(class_id);
-        int swing = 0;
+        double swing = 0;
         if (classConfig.has("swing")) {
-            swing = classConfig.get("swing").getAsInt();
+            swing = classConfig.get("swing").getAsDouble();
 
             //   LOGGER.info("Power level for {} = {}", class_id, maxhealth);
         }
         return swing;
     }
-    public static int getarmor(String class_id){
+    public static double getarmor(String class_id){
 
         classConfig = getclassconfig(class_id);
-        int armor = 0;
+        double armor = 0;
         if (classConfig.has("armor")) {
-            armor = classConfig.get("armor").getAsInt();
+            armor = classConfig.get("armor").getAsDouble();
 
             //   LOGGER.info("Power level for {} = {}", class_id, maxhealth);
         }
         return armor;
     }
-    public static int gettougness(String class_id){
+    public static double gettougness(String class_id){
 
         classConfig = getclassconfig(class_id);
-        int toughness = 0;
+        double toughness = 0;
         if (classConfig.has("toughness")) {
-            toughness = classConfig.get("toughness").getAsInt();
+            toughness = classConfig.get("toughness").getAsDouble();
 
             //   LOGGER.info("Power level for {} = {}", class_id, maxhealth);
         }
         return toughness;
+    }
+    public static double getluck(String class_id){
+
+        classConfig = getclassconfig(class_id);
+        double luck = 0;
+        if (classConfig.has("luck")) {
+            luck = classConfig.get("luck").getAsDouble();
+
+            //   LOGGER.info("Power level for {} = {}", class_id, maxhealth);
+        }
+        return luck;
+    }
+
+
+    public static String getdesc1(String class_id){
+
+        classConfig = getclassconfig(class_id);
+        String description1 = "";
+        if (classConfig.has("description1")) {
+            description1 = classConfig.get("description1").getAsString();
+
+            //   LOGGER.info("Power level for {} = {}", class_id, maxhealth);
+        }
+        return description1;
+    }
+    public static String getdesc2(String class_id){
+
+        classConfig = getclassconfig(class_id);
+        String description2 = "";
+        if (classConfig.has("description2")) {
+            description2 = classConfig.get("description2").getAsString();
+
+            //   LOGGER.info("Power level for {} = {}", class_id, maxhealth);
+        }
+        return description2;
+    }
+    public static String getdesc3(String class_id){
+
+        classConfig = getclassconfig(class_id);
+        String description3 = "";
+        if (classConfig.has("description3")) {
+            description3 = classConfig.get("description3").getAsString();
+
+            //   LOGGER.info("Power level for {} = {}", class_id, maxhealth);
+        }
+        return description3;
+    }
+    public static String gethelm(String class_id){
+
+        classConfig = getclassconfig(class_id);
+        String helmet = "";
+        if (classConfig.has("helmet")) {
+            helmet = classConfig.get("helmet").getAsString();
+
+            //   LOGGER.info("Power level for {} = {}", class_id, maxhealth);
+        }
+        return helmet;
+    }
+    public static String getchest(String class_id){
+
+        classConfig = getclassconfig(class_id);
+        String chestplate = "";
+        if (classConfig.has("chestplate")) {
+            chestplate = classConfig.get("chestplate").getAsString();
+
+            //   LOGGER.info("Power level for {} = {}", class_id, maxhealth);
+        }
+        return chestplate;
+    }
+    public static String getlegs(String class_id){
+
+        classConfig = getclassconfig(class_id);
+        String leggings = "";
+        if (classConfig.has("leggings")) {
+            leggings = classConfig.get("leggings").getAsString();
+
+            //   LOGGER.info("Power level for {} = {}", class_id, maxhealth);
+        }
+        return leggings;
+    }
+    public static String getboot(String class_id){
+
+        classConfig = getclassconfig(class_id);
+        String boots = "";
+        if (classConfig.has("boots")) {
+            boots = classConfig.get("boots").getAsString();
+
+            //   LOGGER.info("Power level for {} = {}", class_id, maxhealth);
+        }
+        return boots;
+    }
+    public static String getmain(String class_id){
+
+        classConfig = getclassconfig(class_id);
+        String main_hand = "";
+        if (classConfig.has("main_hand")) {
+            main_hand = classConfig.get("main_hand").getAsString();
+
+            //   LOGGER.info("Power level for {} = {}", class_id, maxhealth);
+        }
+        return main_hand;
+    }
+    public static String getoffhand(String class_id){
+
+        classConfig = getclassconfig(class_id);
+        String offhand = "";
+        if (classConfig.has("off_hand")) {
+            offhand = classConfig.get("off_hand").getAsString();
+
+            //   LOGGER.info("Power level for {} = {}", class_id, maxhealth);
+        }
+        return offhand;
     }
 
     public JsonObject getClassConfig() {

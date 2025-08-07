@@ -1,0 +1,19 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:diamond_sword"
+    },
+    "title": "the best class",
+    "description": "The great class once unknown, know reveals itself ",
+    "frame": "task",
+    "show_toast": false,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "the_custom_0": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "parent": "dungeons_and_combat:origin"
+}

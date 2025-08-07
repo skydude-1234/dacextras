@@ -52,7 +52,13 @@ public class dacextras {
     public static final Path jsonPath = FMLPaths.CONFIGDIR.get()
             .resolve("dacextras_custom_classes")
             .resolve("custom_main.json");
-
+    public static double hhealth;
+    public static double lluck;
+    public static double sstrength;
+    public static double sspeed;
+    public static double aattack_speed;
+    public static double ttoughness;
+    public static double aarmor;
 
     private static int messageID = 0;
 

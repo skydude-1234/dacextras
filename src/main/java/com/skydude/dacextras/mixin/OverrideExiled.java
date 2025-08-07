@@ -1,6 +1,7 @@
 package com.skydude.dacextras.mixin;
 
 import com.skydude.dacextras.Config;
+import com.skydude.dacextras.dacextras;
 import net.mcreator.dungeonsandcombat.init.DungeonsAndCombatModItems;
 import net.mcreator.dungeonsandcombat.procedures.ExiledChoosedProcedure;
 import net.mcreator.dungeonsandcombat.procedures.RogueChoosedProcedure;
@@ -11,6 +12,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -61,16 +63,24 @@ public abstract class OverrideExiled {
               }
           }
 
-          Objects.requireNonNull(player.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(Config.EXILED_MAX_HEALTH.get());
+          dacextras.hhealth = Config.EXILED_MAX_HEALTH.get();
+          dacextras.lluck = Config.EXILED_LUCK.get();
+          dacextras.sstrength = Config.EXILED_DAMAGE.get();
+          dacextras.sspeed = Config.EXILED_SPEED.get();
+          dacextras.aattack_speed = Config.EXILED_ATTACK_SPEED.get();
+          dacextras.aarmor = Config.EXILED_ARMOR.get();
+          dacextras.ttoughness = 0;
+          LivingEntity living = ((LivingEntity) entity);
+          Objects.requireNonNull(living.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(Config.EXILED_MAX_HEALTH.get());
           // set the health to amx health so no glitches happen
-          player.setHealth(player.getMaxHealth());
+          living.setHealth(living.getMaxHealth());
 
-          Objects.requireNonNull(player.getAttribute(Attributes.LUCK)).setBaseValue(Config.EXILED_LUCK.get());
-          Objects.requireNonNull(player.getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue(Config.EXILED_DAMAGE.get());
-          Objects.requireNonNull(player.getAttribute(Attributes.MOVEMENT_SPEED)).setBaseValue(Config.EXILED_SPEED.get());
-          Objects.requireNonNull(player.getAttribute(Attributes.ATTACK_SPEED)).setBaseValue(Config.EXILED_ATTACK_SPEED.get());
-          Objects.requireNonNull(player.getAttribute(Attributes.ARMOR)).setBaseValue(Config.EXILED_ARMOR.get());
-          Objects.requireNonNull(player.getAttribute(Attributes.ARMOR_TOUGHNESS)).setBaseValue(0);
+          Objects.requireNonNull(living.getAttribute(Attributes.LUCK)).setBaseValue(Config.EXILED_LUCK.get());
+          Objects.requireNonNull(living.getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue(Config.EXILED_DAMAGE.get());
+          Objects.requireNonNull(living.getAttribute(Attributes.MOVEMENT_SPEED)).setBaseValue(Config.EXILED_SPEED.get());
+          Objects.requireNonNull(living.getAttribute(Attributes.ATTACK_SPEED)).setBaseValue(Config.EXILED_ATTACK_SPEED.get());
+          Objects.requireNonNull(living.getAttribute(Attributes.ARMOR)).setBaseValue(Config.EXILED_ARMOR.get());
+          Objects.requireNonNull(living.getAttribute(Attributes.ARMOR_TOUGHNESS)).setBaseValue(0);
 
 
           if(player.getItemBySlot(EquipmentSlot.HEAD).isEmpty()) {

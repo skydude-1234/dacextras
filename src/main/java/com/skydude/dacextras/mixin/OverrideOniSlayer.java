@@ -2,6 +2,7 @@ package com.skydude.dacextras.mixin;
 
 import com.mojang.logging.LogUtils;
 import com.skydude.dacextras.Config;
+import com.skydude.dacextras.dacextras;
 import net.mcreator.dungeonsandcombat.init.DungeonsAndCombatModItems;
 import net.mcreator.dungeonsandcombat.procedures.OniSlayerChoosedProcedure;
 import net.mcreator.dungeonsandcombat.procedures.RogueChoosedProcedure;
@@ -63,16 +64,24 @@ public abstract class OverrideOniSlayer {
             }
         }
 
-        Objects.requireNonNull(player.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(Config.ONI_MAX_HEALTH.get());
+        dacextras.hhealth = Config.ONI_MAX_HEALTH.get();
+        dacextras.lluck = Config.ONI_LUCK.get();
+        dacextras.sstrength = Config.ONI_DAMAGE.get();
+        dacextras.sspeed = Config.ONI_SPEED.get();
+        dacextras.aattack_speed = Config.ONI_ATTACK_SPEED.get();
+        dacextras.aarmor = Config.ONI_ARMOR.get();
+        dacextras.ttoughness = 0;
+        LivingEntity living = ((LivingEntity) entity);
+        Objects.requireNonNull(living.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(Config.ONI_MAX_HEALTH.get());
         // set the health to amx health so no glitches happen
-        player.setHealth(player.getMaxHealth());
+        living.setHealth(living.getMaxHealth());
 
-        Objects.requireNonNull(player.getAttribute(Attributes.LUCK)).setBaseValue(Config.ONI_LUCK.get());
-        Objects.requireNonNull(player.getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue(Config.ONI_DAMAGE.get());
-        Objects.requireNonNull(player.getAttribute(Attributes.MOVEMENT_SPEED)).setBaseValue(Config.ONI_SPEED.get());
-        Objects.requireNonNull(player.getAttribute(Attributes.ATTACK_SPEED)).setBaseValue(Config.ONI_ATTACK_SPEED.get());
-        Objects.requireNonNull(player.getAttribute(Attributes.ARMOR)).setBaseValue(Config.ONI_ARMOR.get());
-        Objects.requireNonNull(player.getAttribute(Attributes.ARMOR_TOUGHNESS)).setBaseValue(0);
+        Objects.requireNonNull(living.getAttribute(Attributes.LUCK)).setBaseValue(Config.ONI_LUCK.get());
+        Objects.requireNonNull(living.getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue(Config.ONI_DAMAGE.get());
+        Objects.requireNonNull(living.getAttribute(Attributes.MOVEMENT_SPEED)).setBaseValue(Config.ONI_SPEED.get());
+        Objects.requireNonNull(living.getAttribute(Attributes.ATTACK_SPEED)).setBaseValue(Config.ONI_ATTACK_SPEED.get());
+        Objects.requireNonNull(living.getAttribute(Attributes.ARMOR)).setBaseValue(Config.ONI_ARMOR.get());
+        Objects.requireNonNull(living.getAttribute(Attributes.ARMOR_TOUGHNESS)).setBaseValue(0);
 
 
         if(player.getItemBySlot(EquipmentSlot.HEAD).isEmpty()) {

@@ -6,7 +6,7 @@
 	enableTrueInvis = true
 	#Max Health for Rogue
 	#Range: 1.0 ~ 1000.0
-	rogue_max_health = 106.0
+	rogue_max_health = 16.0
 	#Luck for Rogue
 	#Range: 0.0 ~ 100.0
 	rogue_luck = 1.0
@@ -19,17 +19,17 @@
 	#Attack Speed for Rogue
 	#Range: 0.0 ~ 100.0
 	rogue_attack_speed = 4.2
+	#Armorfor Rogue
+	#Range: 0.0 ~ 100.0
+	rogue_armor = 0.0
 	#Starting Helmet for Rogue
 	rogue_helmet = "dungeons_and_combat:rogue_helmet"
 	#Starting Chestplate for Rogue
-	rogue_chestplate = "dungeons_and_combat:vagabond_chestplate"
+	rogue_chestplate = "dungeons_and_combat:rogue_chestplate"
 	#Starting Leggings for Rogue
 	rogue_leggings = "dungeons_and_combat:rogue_leggings"
 	#Starting Boots for Rogue
 	rogue_boots = "dungeons_and_combat:rogue_boots"
-	#Armorfor Rogue
-	#Range: 0.0 ~ 100.0
-	rogue_armor = 0.0
 
 [" Bounty Hunter CONFIG"]
 	#Max Health for bounty hunter
@@ -47,6 +47,9 @@
 	#Attack Speed for bounty hunter
 	#Range: 0.0 ~ 100.0
 	bounty_attack_speed = 3.95
+	#Armor for bounty hunter
+	#Range: 0.0 ~ 100.0
+	bounty_armor = 0.0
 	#Starting Helmet for bounty hunter
 	bounty_helmet = "dungeons_and_combat:bounty_hunter_helmet"
 	#Starting Chestplate for bounty hunter
@@ -55,9 +58,6 @@
 	bounty_leggings = "dungeons_and_combat:bounty_hunter_leggings"
 	#Starting Boots for bounty hunter
 	bounty_boots = "dungeons_and_combat:bounty_hunter_boots"
-	#Armor for bounty hunter
-	#Range: 0.0 ~ 100.0
-	bounty_armor = 0.0
 
 [" Oni Slayer CONFIG"]
 	#Max Health for oni slayer
@@ -75,6 +75,9 @@
 	#Attack Speed for oni slayer
 	#Range: 0.0 ~ 100.0
 	oni_attack_speed = 4.2
+	#Armor for oni slayer
+	#Range: 0.0 ~ 100.0
+	oni_armor = 0.0
 	#Starting Helmet for oni slayer
 	oni_helmet = "dungeons_and_combat:oni_slayer_helmet"
 	#Starting Chestplate for oni slayer
@@ -83,68 +86,6 @@
 	oni_leggings = "dungeons_and_combat:oni_slayer_leggings"
 	#Starting Boots for oni slayer
 	oni_boots = "dungeons_and_combat:oni_slayer_boots"
-	#Armor for oni slayer
-	#Range: 0.0 ~ 100.0
-	oni_armor = 0.0
-
-["VAGABOND CONFIG"]
-	#Max Health for vagabond
-	#Range: 1.0 ~ 1000.0
-	vagabond_health = 20.0
-	#Luck for vagabond
-	#Range: 0.0 ~ 100.0
-	vagabond_luck = 1.0
-	#Attack Damage for vagabond
-	#Range: 0.0 ~ 100.0
-	vagabond_damage = 1.2000000476837158
-	#Speed for vagabond 
-	#Range: 0.0 ~ 100.0
-	vagabond_speed = 0.095
-	#Attack Speed for vagabond 
-	#Range: 0.0 ~ 100.0
-	vagabond_attack_speed = 4.2
-	#Starting Helmet for vagabond
-	vagabond_helmet = "dungeons_and_combat:vagabond_helmet"
-	#Starting Chestplate for vagabond
-	vagabond_chestplate = "dungeons_and_combat:vagabond_chestplate"
-	#Starting Leggings for vagabond
-	vagabond_leggings = "dungeons_and_combat:vagabond_leggings"
-	#Starting Boots for vagabond
-	vagabond_boots = "dungeons_and_combat:vagabond_boots"
-
-[" KAMATH BOSS CONFIG"]
-	#Kamath's movement speed
-	#Range: 0.0 ~ 100.0
-	kamath_movement_speed = 0.3
-	#Kamath's Health
-	#Range: 0.0 ~ 100000.0
-	kamath_max_health = 500.0
-	#Kamath's armor
-	#Range: 0.0 ~ 1000.0
-	kamath_armor = 20.0
-	#Kamath's damage 
-	#Range: 0.0 ~ 1000.0
-	kamath_attack_damage = 24.0
-	#Kamath's Follow Range
-	#Range: 0.0 ~ 1000.0
-	kamath_follow_range = 64.0
-	#Kamath's knockback resistance
-	#Range: 0.0 ~ 1000.0
-	kamath_knockback_resistance = 1.0
-	#Kamath's attack knockback
-	#Range: 0.0 ~ 1000.0
-	kamath_attack_knockback = 1.0
-
-["FRACTURED VEX"]
-	#Fractured vex spawn weight
-	#Range: 0 ~ 1000
-	fractured_vex-spawn_weight = 13
-	#Fractured vex spawn minimum amount
-	#Range: 0 ~ 100
-	fractured_vex-spawn_min = 1
-	#Fractured vex spawn maximum amount
-	#Range: 0 ~ 100
-	fractured_vex-spawn_max = 3
 
 [" Forgotten Knight CONFIG"]
 	#Max Health for Forgotten Knight
@@ -205,7 +146,7 @@
 ["  TITAN CONFIG"]
 	#Max Health for Titan
 	#Range: 1.0 ~ 1000.0
-	EXILED_health = 28.0
+	TITAN_health = 28.0
 	#Luck for Titan
 	#Range: 0.0 ~ 100.0
 	TITAN_luck = 0.0
@@ -229,4 +170,63 @@
 	TITAN_leggings = "dungeons_and_combat:titan_leggings"
 	#Starting Boots for Titan
 	TITAN_boots = "dungeons_and_combat:titan_boots"
+
+["VAGABOND CONFIG"]
+	#Max Health for vagabond
+	#Range: 1.0 ~ 1000.0
+	vagabond_health = 20.0
+	#Luck for vagabond
+	#Range: 0.0 ~ 100.0
+	vagabond_luck = 0.0
+	#Attack Damage for vagabond
+	#Range: 0.0 ~ 100.0
+	vagabond_damage = 1.0
+	#Speed for vagabond 
+	#Range: 0.0 ~ 100.0
+	vagabond_speed = 0.1
+	#Attack Speed for vagabond 
+	#Range: 0.0 ~ 100.0
+	vagabond_attack_speed = 0.0
+	#Starting Helmet for vagabond
+	vagabond_helmet = "dungeons_and_combat:vagabond_helmet"
+	#Starting Chestplate for vagabond
+	vagabond_chestplate = "dungeons_and_combat:vagabond_chestplate"
+	#Starting Leggings for vagabond
+	vagabond_leggings = "dungeons_and_combat:vagabond_leggings"
+	#Starting Boots for vagabond
+	vagabond_boots = "dungeons_and_combat:vagabond_boots"
+
+[" KAMATH BOSS CONFIG"]
+	#Kamath's movement speed
+	#Range: 0.0 ~ 100.0
+	kamath_movement_speed = 0.3
+	#Kamath's Health
+	#Range: 0.0 ~ 100000.0
+	kamath_max_health = 500.0
+	#Kamath's armor
+	#Range: 0.0 ~ 1000.0
+	kamath_armor = 20.0
+	#Kamath's damage 
+	#Range: 0.0 ~ 1000.0
+	kamath_attack_damage = 24.0
+	#Kamath's Follow Range
+	#Range: 0.0 ~ 1000.0
+	kamath_follow_range = 64.0
+	#Kamath's knockback resistance
+	#Range: 0.0 ~ 1000.0
+	kamath_knockback_resistance = 1.0
+	#Kamath's attack knockback
+	#Range: 0.0 ~ 1000.0
+	kamath_attack_knockback = 1.0
+
+["FRACTURED VEX"]
+	#Fractured vex spawn weight
+	#Range: 0 ~ 1000
+	fractured_vex-spawn_weight = 13
+	#Fractured vex spawn minimum amount
+	#Range: 0 ~ 100
+	fractured_vex-spawn_min = 1
+	#Fractured vex spawn maximum amount
+	#Range: 0 ~ 100
+	fractured_vex-spawn_max = 3
 
