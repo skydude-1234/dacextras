@@ -6,7 +6,8 @@
 
 
 .project
-
+.gradle
+build
 
 # Package Files #
 *.jar
