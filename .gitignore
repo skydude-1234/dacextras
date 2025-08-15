@@ -8,6 +8,7 @@
 .project
 .gradle
 build
+run
 
 # Package Files #
 *.jar
