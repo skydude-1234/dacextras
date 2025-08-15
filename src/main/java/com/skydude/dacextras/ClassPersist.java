@@ -12,7 +12,7 @@ import static com.skydude.dacextras.dacextras.*;
 public class ClassPersist {
 
     private static final ResourceLocation REQUIRED_ADVANCEMENT =
-            new ResourceLocation("dacextras", "the_custom");
+            new ResourceLocation("dungeons_and_combat", "origin");
 
     @SubscribeEvent
     public static void onRespawn(PlayerEvent.PlayerRespawnEvent event) {
@@ -20,7 +20,7 @@ public class ClassPersist {
 
 
 
-            CustomClasses.class_attributes(hhealth, aarmor, ttoughness, sstrength, sspeed, aattack_speed, lluck, player);
+            CustomClasses.class_attributes(player);
 
     }
 
@@ -28,10 +28,9 @@ public class ClassPersist {
     public static void onLogin(PlayerEvent.PlayerLoggedInEvent event) {
         var player = event.getEntity();
 
-
-
-            CustomClasses.class_attributes(hhealth, aarmor, ttoughness, sstrength, sspeed, aattack_speed, lluck, player);
-
+        if (hasRequiredAdvancement((ServerPlayer) player)) {
+            CustomClasses.class_attributes(player);
+        }
     }
 
     private static boolean hasRequiredAdvancement(net.minecraft.server.level.ServerPlayer player) {

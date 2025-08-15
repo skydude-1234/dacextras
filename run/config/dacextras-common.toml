@@ -170,6 +170,9 @@
 	TITAN_leggings = "dungeons_and_combat:titan_leggings"
 	#Starting Boots for Titan
 	TITAN_boots = "dungeons_and_combat:titan_boots"
+	#Toughness for Titan
+	#Range: 0.0 ~ 100.0
+	TITAN_toughness = 0.1
 
 ["VAGABOND CONFIG"]
 	#Max Health for vagabond
@@ -222,11 +225,11 @@
 ["FRACTURED VEX"]
 	#Fractured vex spawn weight
 	#Range: 0 ~ 1000
-	fractured_vex-spawn_weight = 13
+	fractured_vex-spawn_weight = 100
 	#Fractured vex spawn minimum amount
 	#Range: 0 ~ 100
-	fractured_vex-spawn_min = 1
+	fractured_vex-spawn_min = 10
 	#Fractured vex spawn maximum amount
 	#Range: 0 ~ 100
-	fractured_vex-spawn_max = 3
+	fractured_vex-spawn_max = 30
 

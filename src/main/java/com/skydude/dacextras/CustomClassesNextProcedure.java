@@ -22,10 +22,9 @@ public class CustomClassesNextProcedure {
         if (entity != null) {
             System.out.println(entity);
 
-            System.out.println(class_id);
-            dacextras.TEMPCLASS_ID = class_id;
-
             if (entity instanceof ServerPlayer) {
+                System.out.println(class_id);
+                dacextras.TEMPCLASS_ID = class_id;
                 ServerPlayer _ent = (ServerPlayer) entity;
                 final BlockPos _bpos = BlockPos.containing(x, y, z);
 
@@ -42,6 +41,9 @@ public class CustomClassesNextProcedure {
                     public AbstractContainerMenu createMenu(int windowId, Inventory inv, Player player) {
                         // Forge will provide the buf on the client automatically
                         return new CustomClassGuiMenu(windowId, inv, null);
+
+
+
                     }
                 }, buf -> {
                     // ✅ This is the crucial part: write extra data to sync

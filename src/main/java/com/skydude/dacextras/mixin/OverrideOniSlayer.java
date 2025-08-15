@@ -2,6 +2,7 @@ package com.skydude.dacextras.mixin;
 
 import com.mojang.logging.LogUtils;
 import com.skydude.dacextras.Config;
+import com.skydude.dacextras.CustomClasses;
 import com.skydude.dacextras.dacextras;
 import net.mcreator.dungeonsandcombat.init.DungeonsAndCombatModItems;
 import net.mcreator.dungeonsandcombat.procedures.OniSlayerChoosedProcedure;
@@ -25,6 +26,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Objects;
+
+import static com.skydude.dacextras.CustomClasses.class_attributes;
 
 @Mixin(value = OniSlayerChoosedProcedure.class, remap = false)
 public abstract class OverrideOniSlayer {
@@ -64,15 +67,19 @@ public abstract class OverrideOniSlayer {
             }
         }
 
-        dacextras.hhealth = Config.ONI_MAX_HEALTH.get();
-        dacextras.lluck = Config.ONI_LUCK.get();
-        dacextras.sstrength = Config.ONI_DAMAGE.get();
-        dacextras.sspeed = Config.ONI_SPEED.get();
-        dacextras.aattack_speed = Config.ONI_ATTACK_SPEED.get();
-        dacextras.aarmor = Config.ONI_ARMOR.get();
-        dacextras.ttoughness = 0;
         LivingEntity living = ((LivingEntity) entity);
-        Objects.requireNonNull(living.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(Config.ONI_MAX_HEALTH.get());
+
+        player.getPersistentData().putDouble("dacextras.maxhealth",Config.ONI_MAX_HEALTH.get());
+        player.getPersistentData().putDouble("dacextras.luck", Config.ONI_LUCK.get());
+        player.getPersistentData().putDouble("dacextras.strength", Config.ONI_DAMAGE.get());
+        player.getPersistentData().putDouble("dacextras.speed", Config.ONI_SPEED.get());
+        player.getPersistentData().putDouble("dacextras.attackspeed", Config.ONI_ATTACK_SPEED.get());
+        player.getPersistentData().putDouble("dacextras.toughness", 0.0);
+        player.getPersistentData().putDouble("dacextras.armor", Config.ONI_ARMOR.get());
+
+        CustomClasses.class_attributes((Player) living);
+
+
         // set the health to amx health so no glitches happen
         living.setHealth(living.getMaxHealth());
 

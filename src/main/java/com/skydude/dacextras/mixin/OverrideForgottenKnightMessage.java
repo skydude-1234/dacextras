@@ -19,8 +19,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
 
-import static com.skydude.dacextras.dacextras.doesitexist;
-import static com.skydude.dacextras.dacextras.jsonPath;
+import static com.skydude.dacextras.dacextras.*;
 import static net.minecraft.util.datafix.fixes.BlockEntitySignTextStrictJsonFix.GSON;
 import com.skydude.dacextras.dacextras;
 
@@ -40,9 +39,14 @@ public class OverrideForgottenKnightMessage {
             }
 
             if (buttonID == 1) {
-                dacextras.NUMBER = (dacextras.CLASS_IDS.size() - 1);
-                String class_id =  dacextras.CLASS_IDS.get((int) dacextras.NUMBER);
-                CustomClassesNextProcedure.execute(world, (double) x, (double) y, (double) z, entity, class_id);
+                if (customclass) {
+                    dacextras.NUMBER = (dacextras.CLASS_IDS.size() - 1);
+                    System.out.println("fgknight triggered" + dacextras.NUMBER);
+                    String class_id = dacextras.CLASS_IDS.get((int) dacextras.NUMBER);
+                    CustomClassesNextProcedure.execute(world, (double) x, (double) y, (double) z, entity, class_id);
+                } else {
+                    RogueNextProcedure.execute(world, (double)x, (double)y, (double)z, entity);
+                }
             }
 
             if (buttonID == 2) {

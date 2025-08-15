@@ -2,6 +2,7 @@ package com.skydude.dacextras.mixin;
 
 import com.mojang.logging.LogUtils;
 import com.skydude.dacextras.Config;
+import com.skydude.dacextras.CustomClasses;
 import com.skydude.dacextras.dacextras;
 import net.mcreator.dungeonsandcombat.init.DungeonsAndCombatModItems;
 import net.mcreator.dungeonsandcombat.procedures.ForgottenKnightChoosedProcedure;
@@ -25,6 +26,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Objects;
+
+import static com.skydude.dacextras.CustomClasses.class_attributes;
 
 @Mixin(value = ForgottenKnightChoosedProcedure.class, remap = false)
 public abstract class OverrideForgottenKnight {
@@ -68,13 +71,15 @@ public abstract class OverrideForgottenKnight {
         // set the health to amx health so no glitches happen
         living.setHealth(living.getMaxHealth());
 
-        dacextras.hhealth = Config.FORGOTTEN_MAX_HEALTH.get();
-        dacextras.lluck = Config.FORGOTTEN_LUCK.get();
-        dacextras.sstrength = Config.FORGOTTEN_DAMAGE.get();
-        dacextras.sspeed = Config.FORGOTTEN_SPEED.get();
-        dacextras.aattack_speed = Config.FORGOTTEN_ATTACK_SPEED.get();
-        dacextras.aarmor = Config.FORGOTTEN_ARMOR.get();
-        dacextras.ttoughness = 0;
+        player.getPersistentData().putDouble("dacextras.maxhealth",Config.FORGOTTEN_MAX_HEALTH.get());
+        player.getPersistentData().putDouble("dacextras.luck", Config.FORGOTTEN_LUCK.get());
+        player.getPersistentData().putDouble("dacextras.strength", Config.FORGOTTEN_DAMAGE.get());
+        player.getPersistentData().putDouble("dacextras.speed", Config.FORGOTTEN_SPEED.get());
+        player.getPersistentData().putDouble("dacextras.attackspeed", Config.FORGOTTEN_ATTACK_SPEED.get());
+        player.getPersistentData().putDouble("dacextras.toughness", 0.0);
+        player.getPersistentData().putDouble("dacextras.armor", Config.FORGOTTEN_ARMOR.get());
+
+        CustomClasses.class_attributes((Player) living);
 
 
         Objects.requireNonNull(living.getAttribute(Attributes.ATTACK_SPEED)).setBaseValue(Config.FORGOTTEN_ATTACK_SPEED.get());

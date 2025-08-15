@@ -15,7 +15,7 @@ license="All Rights Reserved"
 # A list of mods - how many allowed here is determined by the individual mod loader
 [[mods]]
 modId="dacextras"
-version="1.0-SNAPSHOT"
+version="1.0"
 displayName="dacextras"
 authors="skydude_"
 

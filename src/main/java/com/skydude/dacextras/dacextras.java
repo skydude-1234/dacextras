@@ -52,14 +52,7 @@ public class dacextras {
     public static final Path jsonPath = FMLPaths.CONFIGDIR.get()
             .resolve("dacextras_custom_classes")
             .resolve("custom_main.json");
-    public static double hhealth;
-    public static double lluck;
-    public static double sstrength;
-    public static double sspeed;
-    public static double aattack_speed;
-    public static double ttoughness;
-    public static double aarmor;
-
+    public static boolean customclass;
     private static int messageID = 0;
 
     public static <T> void addNetworkMessage(Class<T> messageType, BiConsumer<T, FriendlyByteBuf> encoder, Function<FriendlyByteBuf, T> decoder, BiConsumer<T, Supplier<NetworkEvent.Context>> messageConsumer) {
@@ -112,8 +105,8 @@ public class dacextras {
             try {
                 String jsonContent = Files.readString(jsonPath);
                 JsonObject jconfig = GSON.fromJson(jsonContent, JsonObject.class);
-
                 if (jconfig != null && jconfig.has("custom_classes") && jconfig.get("custom_classes").isJsonArray()) {
+                    customclass = true;
                     CLASS_IDS.clear(); // prevent duplicates
                     jconfig.getAsJsonArray("custom_classes").forEach(e -> {
                         String class_id = e.getAsString();
@@ -129,6 +122,7 @@ public class dacextras {
                     }
                 } else {
                     LOGGER.warn("⚠ No 'custom_classes' array found in {}", jsonPath);
+                    customclass = false;
                 }
             } catch (IOException ex) {
                 LOGGER.error("❌ Failed to read JSON config {}: {}", jsonPath, ex.getMessage());

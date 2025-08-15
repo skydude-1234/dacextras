@@ -117,11 +117,6 @@ public class Config {
 
         builder.push(" ROGUE CONFIG");
 
-        OVERRIDE_ROGUE = builder
-                .comment("Override Rogue Class with custom values & bug fixes HIGHLY RECOMMENDED")
-                .define("enableTrueInvis", true);
-
-
         ROGUE_MAX_HEALTH = builder
                 .comment("Max Health for Rogue")
                 .defineInRange("rogue_max_health", 16.0F, 1.0F, 1000.0F);
@@ -333,8 +328,8 @@ public class Config {
                 .comment("Armor for Titan")
                 .defineInRange("TITAN_armor", 2.0F, 0.0, 100.0F);
         TITAN_ARMOR_TOUGHNESS = builder
-                .comment("Armor for Titan")
-                .defineInRange("TITAN_armor", 0.1, 0.0, 100.0F);
+                .comment("Toughness for Titan")
+                .defineInRange("TITAN_toughness", 0.1, 0.0, 100.0F);
 
         TITAN_HELMET = builder
                 .comment("Starting Helmet for Titan")

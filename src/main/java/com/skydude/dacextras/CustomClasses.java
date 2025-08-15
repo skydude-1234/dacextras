@@ -46,17 +46,17 @@ public class CustomClasses {
      //   loadClassConfig();
         var the_id = class_id;
     }
-    public static void class_attributes(double health, double armor, double toughness, double strength, double speed, double attack_speed, double luck, Player player){
-        Objects.requireNonNull(player.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(health);
+    public static void class_attributes(Player player){
+        Objects.requireNonNull(player.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(player.getPersistentData().getDouble("dacextras.maxhealth"));
         // set the health to amx health so no glitches happen
         player.setHealth(player.getMaxHealth());
 
-        Objects.requireNonNull(player.getAttribute(Attributes.LUCK)).setBaseValue(luck);
-        Objects.requireNonNull(player.getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue(strength);
-        Objects.requireNonNull(player.getAttribute(Attributes.MOVEMENT_SPEED)).setBaseValue(speed);
-        Objects.requireNonNull(player.getAttribute(Attributes.ATTACK_SPEED)).setBaseValue(attack_speed);
-        Objects.requireNonNull(player.getAttribute(Attributes.ARMOR_TOUGHNESS)).setBaseValue(toughness);
-        Objects.requireNonNull(player.getAttribute(Attributes.ARMOR)).setBaseValue(armor);
+        Objects.requireNonNull(player.getAttribute(Attributes.LUCK)).setBaseValue(player.getPersistentData().getDouble("dacextras.luck"));
+        Objects.requireNonNull(player.getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue(player.getPersistentData().getDouble("dacextras.strength"));
+        Objects.requireNonNull(player.getAttribute(Attributes.MOVEMENT_SPEED)).setBaseValue(player.getPersistentData().getDouble("dacextras.speed"));
+        Objects.requireNonNull(player.getAttribute(Attributes.ATTACK_SPEED)).setBaseValue(player.getPersistentData().getDouble("dacextras.attackspeed"));
+        Objects.requireNonNull(player.getAttribute(Attributes.ARMOR_TOUGHNESS)).setBaseValue(player.getPersistentData().getDouble("dacextras.toughness"));
+        Objects.requireNonNull(player.getAttribute(Attributes.ARMOR)).setBaseValue(player.getPersistentData().getDouble("dacextras.armor"));
 
     }
 public static void execute(String class_id, Entity entity) {
@@ -89,15 +89,15 @@ public static void execute(String class_id, Entity entity) {
             }
         }
     }
+    player.getPersistentData().putDouble("dacextras.maxhealth", getmaxhealth(class_id));
+    player.getPersistentData().putDouble("dacextras.luck", getluck(class_id));
+    player.getPersistentData().putDouble("dacextras.strength", getstrength(class_id));
+    player.getPersistentData().putDouble("dacextras.speed", getspeed(class_id));
+    player.getPersistentData().putDouble("dacextras.attackspeed", getswing(class_id));
+    player.getPersistentData().putDouble("dacextras.toughness", gettougness(class_id));
+    player.getPersistentData().putDouble("dacextras.armor", getarmor(class_id));
 
-    hhealth = getmaxhealth(class_id);
-    lluck = getluck(class_id);
-    sstrength = getstrength(class_id);
-    sspeed = getspeed(class_id);
-    aattack_speed = getswing(class_id);
-    ttoughness = gettougness(class_id);
-    aarmor = getarmor(class_id);
-    class_attributes(hhealth, aarmor, ttoughness, sstrength, sspeed, aattack_speed, lluck, player);
+    class_attributes(player);
 
 
 

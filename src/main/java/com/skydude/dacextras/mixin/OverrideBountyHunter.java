@@ -2,6 +2,7 @@ package com.skydude.dacextras.mixin;
 
 import com.mojang.logging.LogUtils;
 import com.skydude.dacextras.Config;
+import com.skydude.dacextras.CustomClasses;
 import com.skydude.dacextras.dacextras;
 import net.mcreator.dungeonsandcombat.init.DungeonsAndCombatModItems;
 import net.mcreator.dungeonsandcombat.procedures.BountyHunterChoosedProcedure;
@@ -25,6 +26,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Objects;
+
+import static com.skydude.dacextras.CustomClasses.class_attributes;
 
 @Mixin(value = BountyHunterChoosedProcedure.class, remap = false)
 public abstract class OverrideBountyHunter {
@@ -65,25 +68,21 @@ public abstract class OverrideBountyHunter {
         }
         LivingEntity living = ((LivingEntity) entity);
 
-        dacextras.hhealth = Config.BOUNTY_MAX_HEALTH.get();
-        dacextras.lluck = Config.BOUNTY_LUCK.get();
-        dacextras.sstrength = Config.BOUNTY_DAMAGE.get();
-        dacextras.sspeed = Config.BOUNTY_SPEED.get();
-        dacextras.aattack_speed = Config.BOUNTY_ATTACK_SPEED.get();
-        dacextras.aarmor = Config.BOUNTY_ARMOR.get();
-        dacextras.ttoughness = 0;
 
-        Objects.requireNonNull(living.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(Config.BOUNTY_MAX_HEALTH.get());
+        player.getPersistentData().putDouble("dacextras.maxhealth",Config.BOUNTY_MAX_HEALTH.get());
+        player.getPersistentData().putDouble("dacextras.luck", Config.BOUNTY_LUCK.get());
+        player.getPersistentData().putDouble("dacextras.strength", Config.BOUNTY_DAMAGE.get());
+        player.getPersistentData().putDouble("dacextras.speed", Config.BOUNTY_SPEED.get());
+        player.getPersistentData().putDouble("dacextras.attackspeed", Config.BOUNTY_ATTACK_SPEED.get());
+        player.getPersistentData().putDouble("dacextras.toughness", 0.0);
+        player.getPersistentData().putDouble("dacextras.armor", Config.BOUNTY_ARMOR.get());
+        class_attributes(player);
+        CustomClasses.class_attributes((Player) living);
+
         // set the health to amx health so no glitches happen
         living.setHealth(living.getMaxHealth());
 
-        Objects.requireNonNull(living.getAttribute(Attributes.LUCK)).setBaseValue(Config.BOUNTY_LUCK.get());
-        Objects.requireNonNull(living.getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue(Config.BOUNTY_DAMAGE.get());
-        Objects.requireNonNull(living.getAttribute(Attributes.MOVEMENT_SPEED)).setBaseValue(Config.BOUNTY_SPEED.get());
-        Objects.requireNonNull(living.getAttribute(Attributes.ATTACK_SPEED)).setBaseValue(Config.BOUNTY_ATTACK_SPEED.get());
-        Objects.requireNonNull(living.getAttribute(Attributes.ARMOR)).setBaseValue(Config.BOUNTY_ARMOR.get());
-        Objects.requireNonNull(living.getAttribute(Attributes.ARMOR_TOUGHNESS)).setBaseValue(0);
-
+       
         if(player.getItemBySlot(EquipmentSlot.HEAD).isEmpty()) {
             player.setItemSlot(EquipmentSlot.HEAD, new ItemStack(Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Config.BOUNTY_HELMET.get())))));
         }
