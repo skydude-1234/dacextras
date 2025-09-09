@@ -20,7 +20,8 @@
     "OverrideRogueGuiMessage",
     "OverrideTitan",
     "OverrideTitanEver",
-    "OverrideVagabond"
+    "OverrideVagabond",
+
   ],
   "client": [
   ],

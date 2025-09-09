@@ -68,7 +68,7 @@ public abstract class OverrideRogue {
 
 
           LivingEntity living = ((LivingEntity) entity);
-
+          player.getPersistentData().putString("dacextras.class_id", "Rogue");
           player.getPersistentData().putDouble("dacextras.maxhealth",Config.ROGUE_MAX_HEALTH.get());
           player.getPersistentData().putDouble("dacextras.luck", Config.ROGUE_LUCK.get());
           player.getPersistentData().putDouble("dacextras.strength", Config.ROGUE_DAMAGE.get());

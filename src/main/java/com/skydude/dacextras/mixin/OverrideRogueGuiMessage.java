@@ -117,6 +117,7 @@ public class OverrideRogueGuiMessage {
                     }
                 }
                 if (buttonID == 2) {
+                    
                     if (customclass) {
                         if (dacextras.NUMBER <= -1) {
                             RogueChoosedProcedure.execute(entity);
@@ -127,6 +128,7 @@ public class OverrideRogueGuiMessage {
                         dacextras.NUMBER = -1;
                     } else{
                         RogueChoosedProcedure.execute(entity);
+
 
                     }
                 }

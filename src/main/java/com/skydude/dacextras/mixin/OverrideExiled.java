@@ -68,7 +68,7 @@ public abstract class OverrideExiled {
 
 
           LivingEntity living = ((LivingEntity) entity);
-
+          player.getPersistentData().putString("dacextras.class_id", "Exiled");
           player.getPersistentData().putDouble("dacextras.maxhealth",Config.EXILED_MAX_HEALTH.get());
           player.getPersistentData().putDouble("dacextras.luck", Config.EXILED_LUCK.get());
           player.getPersistentData().putDouble("dacextras.strength", Config.EXILED_DAMAGE.get());

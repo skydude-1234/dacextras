@@ -68,7 +68,7 @@ public abstract class OverrideBountyHunter {
         }
         LivingEntity living = ((LivingEntity) entity);
 
-
+        player.getPersistentData().putString("dacextras.class_id", "Bounty_hunter");
         player.getPersistentData().putDouble("dacextras.maxhealth",Config.BOUNTY_MAX_HEALTH.get());
         player.getPersistentData().putDouble("dacextras.luck", Config.BOUNTY_LUCK.get());
         player.getPersistentData().putDouble("dacextras.strength", Config.BOUNTY_DAMAGE.get());

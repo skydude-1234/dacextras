@@ -68,7 +68,7 @@ public abstract class OverrideOniSlayer {
         }
 
         LivingEntity living = ((LivingEntity) entity);
-
+        player.getPersistentData().putString("dacextras.class_id", "Oni");
         player.getPersistentData().putDouble("dacextras.maxhealth",Config.ONI_MAX_HEALTH.get());
         player.getPersistentData().putDouble("dacextras.luck", Config.ONI_LUCK.get());
         player.getPersistentData().putDouble("dacextras.strength", Config.ONI_DAMAGE.get());

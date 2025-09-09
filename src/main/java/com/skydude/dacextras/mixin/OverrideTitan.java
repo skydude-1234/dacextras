@@ -67,6 +67,7 @@ public abstract class OverrideTitan {
 
 
           LivingEntity living = ((LivingEntity) entity);
+          player.getPersistentData().putString("dacextras.class_id", "Titan");
           player.getPersistentData().putDouble("dacextras.maxhealth",Config.TITAN_MAX_HEALTH.get());
           player.getPersistentData().putDouble("dacextras.luck", Config.TITAN_LUCK.get());
           player.getPersistentData().putDouble("dacextras.strength", Config.TITAN_DAMAGE.get());

@@ -70,7 +70,7 @@ public abstract class OverrideForgottenKnight {
         Objects.requireNonNull(living.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(Config.FORGOTTEN_MAX_HEALTH.get());
         // set the health to amx health so no glitches happen
         living.setHealth(living.getMaxHealth());
-
+        player.getPersistentData().putString("dacextras.class_id", "Forgotten_Knight");
         player.getPersistentData().putDouble("dacextras.maxhealth",Config.FORGOTTEN_MAX_HEALTH.get());
         player.getPersistentData().putDouble("dacextras.luck", Config.FORGOTTEN_LUCK.get());
         player.getPersistentData().putDouble("dacextras.strength", Config.FORGOTTEN_DAMAGE.get());

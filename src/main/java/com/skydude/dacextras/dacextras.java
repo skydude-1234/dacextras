@@ -118,6 +118,7 @@ public class dacextras {
                     for (String class_id : dacextras.CLASS_IDS) {
                         CustomClasses custom = new CustomClasses(class_id);
                         CustomClassesRegistry.register(custom);
+                        String custom_id = CustomClassesRegistry.getclassid(class_id);
 
                     }
                 } else {

@@ -21,6 +21,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Objects;
 
+import static com.skydude.dacextras.CustomClassesRegistry.CLASSES;
+import static com.skydude.dacextras.CustomClassesRegistry.CLASSES_id;
 import static com.skydude.dacextras.dacextras.*;
 
 public class CustomClasses {
@@ -89,6 +91,7 @@ public static void execute(String class_id, Entity entity) {
             }
         }
     }
+    player.getPersistentData().putString("dacextras.class_id", class_id);
     player.getPersistentData().putDouble("dacextras.maxhealth", getmaxhealth(class_id));
     player.getPersistentData().putDouble("dacextras.luck", getluck(class_id));
     player.getPersistentData().putDouble("dacextras.strength", getstrength(class_id));
